@@ -1,0 +1,149 @@
+.color-red {
+  background-color: rgba(236, 66, 37, 1);
+  background-image: url(/assets/icons/poison.svg);
+}
+
+.color-green {
+  background-color: rgb(106, 199, 70);
+  background-image: url(/assets/icons/poison.svg);
+}
+
+.color-blue {
+  background-color: rgb(44, 113, 202);
+  background-image: url(/assets/icons/poison.svg);
+}
+
+.color-yellow {
+  background-color: rgba(195, 215, 43, 1);
+  background-image: url(/assets/icons/poison.svg);
+}
+
+.color-brown {
+  background-color: #884d00;
+  background-image: url(/assets/icons/poison.svg);
+}
+
+.color-purple {
+  background-color: rgb(136, 64, 184);
+  background-image: url(/assets/icons/poison.svg);
+}
+
+.color-pink {
+  background-color: rgba(246, 156, 177, 1);
+  background-image: url(/assets/icons/poison.svg);
+}
+
+.color-black {
+  background-color: rgba(40, 40, 40, 1);
+  background-image: url(/assets/icons/poison.svg);
+}
+
+.color-white {
+  background-color: #ffffff;
+  background-image: url(/assets/icons/poison.svg);
+}
+
+.color-gray {
+  background-color: #dddddd;
+  background-image: url(/assets/icons/poison.svg);
+}
+
+/* -------------------------------------------------- */
+
+.type {
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(4px 4px 4px black);
+  width: 40px;
+  height: 40px;
+}
+
+.bug {
+  background-image: url(/assets/icons/bug.svg);
+  background-color: rgb(106, 199, 70); /* green */
+}
+
+.dark {
+  background-image: url(/assets/icons/dark.svg);
+  background-color: rgba(40, 40, 40, 1); /* black */
+}
+
+.dragon {
+  background-image: url(/assets/icons/dragon.svg);
+  background-color: rgb(44, 113, 202); /* blue */
+}
+
+.electric {
+  background-image: url(/assets/icons/electric.svg);
+  background-color: rgb(170, 189, 30); /* yellow */
+}
+
+.fairy {
+  background-image: url(/assets/icons/fairy.svg);
+  background-color: rgba(246, 156, 177, 1); /* pink */
+}
+
+.fighting {
+  background-image: url(/assets/icons/fighting.svg);
+  background-color: rgba(236, 66, 37, 1); /* red */
+}
+
+.fire {
+  background-image: url(/assets/icons/fire.svg);
+  background-color: rgba(236, 66, 37, 1); /* red */
+}
+
+.flying {
+  background-image: url(/assets/icons/flying.svg);
+  background-color: #7b94d8; /* gray */
+}
+
+.ghost {
+  background-image: url(/assets/icons/ghost.svg);
+  background-color: rgb(136, 64, 184); /* purple */
+}
+.grass {
+  background-image: url(/assets/icons/grass.svg);
+  background-color: rgb(95, 184, 59); /* green */
+}
+
+.ground {
+  background-image: url(/assets/icons/ground.svg);
+  background-color: #884d00; /* brown */
+}
+
+.ice {
+  background-image: url(/assets/icons/ice.svg);
+  background-color: #4cadbe; /* white */
+}
+
+.normal {
+  background-image: url(/assets/icons/normal.svg);
+  background-color: #4d4d4d; /* gray */
+}
+
+.poison {
+  background-image: url(/assets/icons/poison.svg);
+  background-color: rgb(136, 64, 184); /* purple */
+}
+
+.psychic {
+  background-image: url(/assets/icons/psychic.svg);
+  background-color: rgb(172, 55, 100); /* pink */
+}
+
+.rock {
+  background-image: url(/assets/icons/rock.svg);
+  background-color: #884d00; /* brown */
+}
+
+.steel {
+  background-image: url(/assets/icons/steel.svg);
+  background-color: #dddddd; /* gray */
+}
+
+.water {
+  background-image: url(/assets/icons/water.svg);
+  background-color: rgb(44, 113, 202); /* blue */
+}

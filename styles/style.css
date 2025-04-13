@@ -1,0 +1,607 @@
+/************************ HOME *****************************/
+
+.hero {
+  background-color: var(--pokemon-blue);
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 50px;
+  height: fit-content;
+  width: 100%;
+  gap: 50px;
+}
+
+.hero-pokemon-logo img {
+  width: 500px;
+}
+
+.hero-pokemon-logo {
+  max-width: 100%;
+}
+
+.hero-logo {
+  width: 40%;
+}
+
+.hero-second-section {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  width: 80%;
+}
+
+.hero-text {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: flex-start;
+  gap: 20px;
+  color: white;
+  text-align: left;
+  width: fit-content;
+}
+
+.hero-links {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 50px;
+  margin-top: 50px;
+}
+
+.hero-links .game-hero-btn {
+  background-color: var(--pokemon-yellow);
+  color: black;
+  padding: 10px 15px;
+  border-radius: var(--border-radius-10);
+  width: fit-content;
+}
+
+.hero-links a:last-child {
+  border: 2px solid var(--pokemon-yellow);
+  color: var(--pokemon-yellow);
+  padding: 10px 15px;
+  border-radius: var(--border-radius-10);
+  width: fit-content;
+
+  &:last-child:hover {
+    color: black;
+  }
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  color: white;
+}
+
+.hero-text p {
+  font-size: 1.5rem;
+}
+
+.hero-logo img {
+  width: 70%;
+}
+
+.instruction {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-content: center;
+  align-items: center;
+  margin: 100px auto;
+  max-width: 1400px;
+  gap: 40px;
+}
+.instruction-text {
+  text-align: left;
+  display: flex;
+  flex-flow: column wrap;
+  gap: 40px;
+  width: 50%;
+}
+.instruction h2 {
+  font-size: 2rem;
+}
+
+.instruction-text div button {
+  border-radius: var(--border-radius-10);
+  font-size: 1.5rem;
+  border: none;
+  padding: 7px 15px;
+}
+
+.instruction-img {
+  width: 30%;
+}
+
+.instruction-img img {
+  width: 100%;
+}
+
+/****************************** Game *******************************/
+
+.start-btn {
+  border: 2px solid var(--pokemon-yellow);
+  color: var(--pokemon-yellow);
+  padding: 10px 15px;
+  border-radius: var(--border-radius-10);
+  width: fit-content;
+}
+
+#compare-cards:enabled:hover {
+  background-color: var(--pokemon-blue);
+  transition: all 300ms ease;
+}
+
+#game-container {
+  margin: 100px auto 0 auto;
+  width: 100%;
+  border-radius: var(--border-radius-15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#game-area {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  padding: 150px 0;
+  background-image: url(https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png);
+}
+
+.player-cards-container {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: var(--pokemon-red-transparent);
+  width: 70%;
+  border-radius: var(--border-radius-15);
+  padding-bottom: 50px;
+
+  border: 5px solid var(--pokemon-yellow);
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.player-cards-container .bold-large,
+#computer-card .bold-large {
+  font-size: 1.2rem;
+  font-weight: 700;
+  background-color: var(--pokemon-yellow);
+  padding: 10px 20px 20px 20px;
+  border-radius: 0 0 30px 30px;
+  width: fit-content;
+}
+
+#player-cards {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+#computer-card {
+  padding: 10px;
+  border-radius: var(--border-radius-15);
+  background-color: var(--pokemon-blue-transparent);
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  width: 70%;
+  padding: 0 20px 50px 20px;
+  border: 5px solid var(--pokemon-yellow);
+  box-shadow: 0px -10px 10px rgba(0, 0, 0, 0.5);
+}
+
+img {
+  width: 100%;
+  /* Feste Breite für die Pokémon-Bilder */
+  height: auto;
+  /* Höhe anpassen für das Seitenverhältnis */
+  border-radius: 15px;
+  /* Abrundung der Ecken */
+  margin-bottom: 15px;
+  /* Abstand nach unten */
+}
+
+.card {
+  width: 250px;
+  margin: 0 auto;
+  border-radius: var(--border-radius-15);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  background-color: white;
+}
+
+#player-cards .card {
+  cursor: pointer;
+  transform: scale(0.8);
+  margin: 0 -50px;
+
+  &:hover {
+    transform: scale(1);
+    transition: transform 300ms ease;
+    z-index: 100;
+  }
+}
+
+.card-header {
+  background-color: var(--pokemon-yellow);
+  border-radius: 15px 15px 0 0;
+  padding: 10px 20px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.card-image {
+  background-color: rgb(116, 146, 221);
+  padding: 20px;
+}
+
+.card-image img {
+  width: 70%;
+}
+
+.card-content {
+  padding: 20px 20px 5px 20px;
+}
+
+.card-skill-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.skill-one,
+.skill-two,
+.skill-three,
+.skill-four {
+  background-color: rgb(217, 217, 217);
+  width: 45%;
+  height: 75px;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.skill-name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+#player-cards .card.selected {
+  border: 5px solid var(--pokemon-yellow);
+  /* Markierung der ausgewählten Karte */
+  z-index: 200;
+  transform: translate(0, -100px);
+  /* Dauerhafte Verschiebung */
+  transition: transform 0.5s ease;
+  /* Sanfte Übergangsanimation */
+}
+
+#compare-cards {
+  width: 150px;
+}
+#scoreboard {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  width: 70%;
+  border-radius: 0 0 15px 15px;
+  background: linear-gradient(
+    90deg,
+    rgba(57, 94, 179, 1) 0%,
+    rgba(228, 31, 37, 1) 100%
+  );
+  padding: 20px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  color: white;
+  font-family: monospace, "Courier New", Courier;
+  font-size: 2rem;
+}
+
+.scoreboard-details {
+  width: 40%;
+}
+.scoreboard-details p {
+  font-size: 2rem;
+}
+.scoreboard-vs-sign {
+  width: 20%;
+}
+
+@keyframes slidein {
+  from {
+    transform: translateX(-5000px);
+  }
+  to {
+    transform: translateX(0px);
+  }
+}
+
+.scoreboard-round-compare {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  animation: slidein 3s 0.5s ease;
+
+  color: white;
+  background-color: #21212180;
+}
+#current-category,
+#round-counter {
+  font-family: monospace, "Courier New", Courier;
+  font-size: 2rem;
+  text-transform: capitalize;
+  padding: 10px;
+}
+
+#comparison-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+#comparison-field-cards {
+  display: flex;
+  gap: 20px;
+}
+
+#round-result {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #ffffff;
+}
+
+#modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#modal-content {
+  background: var(--black-color);
+  color: white;
+  padding: 20px;
+  border-radius: var(--border-radius-15);
+  text-align: center;
+  width: 70%;
+  height: 70%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+#modal-content h2 {
+  font-size: 4rem;
+}
+
+#modal-content h3 {
+  font-size: 3rem;
+}
+
+/****************PIXEL HEART  ***************/
+
+.pixel-block {
+  width: 7em;
+  height: 10em;
+}
+
+.pixelized-heart {
+  width: 1em;
+  height: 1em;
+  box-shadow: 1em 0em #f22613, 2em 0em #f22613, 4em 0em #f22613, 5em 0em #f22613,
+    0em 1em #f22613, 1em 1em #f22613, 2em 1em #f22613, 3em 1em #f22613,
+    4em 1em #f22613, 5em 1em #f22613, 6em 1em #f22613, 0em 2em #f22613,
+    1em 2em #f22613, 2em 2em #f22613, 3em 2em #f22613, 4em 2em #f22613,
+    5em 2em #f22613, 6em 2em #f22613, 1em 3em #f22613, 2em 3em #f22613,
+    3em 3em #f22613, 4em 3em #f22613, 5em 3em #f22613, 2em 4em #f22613,
+    3em 4em #f22613, 4em 4em #f22613, 3em 5em #f22613;
+}
+
+#close-modal {
+  width: 150px;
+  border: none;
+}
+
+/**** MOBIL MEDIA QUERIE ********/
+
+@media screen and (max-width: 900px) {
+  a {
+    font-size: 1rem;
+  }
+  a:last-child {
+    padding: 25px 25px;
+  }
+  a:last-child:active {
+    background-color: var(--pokemon-yellow);
+    color: var(--pokemon-blue);
+  }
+  button:enabled {
+    font-size: 1rem;
+  }
+  img {
+    width: 80%;
+  }
+
+  /************************ HOME *****************************/
+  .hero {
+    padding: 50px 20px;
+  }
+  .hero-second-section {
+    gap: 50px;
+  }
+  .hero-links {
+    gap: 30px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+  .hero-pokemon-logo img {
+    max-width: 100%;
+  }
+  .hero-logo {
+    width: 100%;
+    align-items: center;
+  }
+  .hero-text {
+    width: 100%;
+    text-align: center;
+    align-content: center;
+  }
+  .instruction {
+    display: flex;
+    flex-flow: column wrap;
+    max-width: 100%;
+  }
+  .instruction-text {
+    width: 100%;
+    padding: 40px;
+    order: 1;
+  }
+  .instruction-image {
+    padding: 40px;
+  }
+  .instruction-image img {
+    width: 80%;
+  }
+  .instruction-text div button {
+    font-size: 1.2rem;
+  }
+  .instruction-img {
+    width: 40%;
+  }
+
+  .instruction-img img {
+    width: 100%;
+  }
+
+  /***********GAME*************/
+  #game-area {
+    padding: 20px;
+  }
+  .player-cards-container {
+    gap: 0px;
+    width: 100%;
+    padding: 0px 0px 50px 0px;
+  }
+  #computer-card {
+    gap: 10px;
+    width: 100%;
+    padding: 0px 0px 50px 0px;
+  }
+  #player-cards .card {
+    margin: 0px -30px;
+  }
+  #scoreboard {
+    width: 100%;
+    font-size: 1.5rem;
+  }
+  .scoreboard-details p {
+    font-size: 1.5rem;
+  }
+  #current-category,
+  #round-counter {
+    font-size: 1.5rem;
+  }
+
+  #comparison-field-cards {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    gap: 20px;
+  }
+
+  #modal-content {
+    width: 80%;
+    height: 80%;
+  }
+
+  #modal-content h2 {
+    font-size: 3rem;
+  }
+
+  #modal-content h3 {
+    font-size: 2rem;
+  }
+
+  .pixel-block {
+    width: 7rem;
+    height: 6rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .hero-text h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-second-section p,
+  #scoreboard,
+  .scoreboard-details p {
+    font-size: 1rem;
+  }
+  .instruction h2 {
+    font-size: 1.5rem;
+  }
+  .instruction-img {
+    width: 60%;
+  }
+  footer p {
+    font-size: 0.7rem;
+  }
+  #computer-card {
+    gap: 10px;
+    width: 100%;
+    padding: 0px 0px 50px 0px;
+  }
+
+  #player-cards .card {
+    margin: 0px;
+    transform: scale(0.9);
+  }
+  #modal-content h2 {
+    font-size: 2rem;
+  }
+  #modal-content h3 {
+    font-size: 1.7rem;
+  }
+}
