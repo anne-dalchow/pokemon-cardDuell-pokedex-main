@@ -1,18 +1,10 @@
-html,
-body {
-  height: 100%;
-}
 
 body {
-  display: flex;
-  flex-direction: column;
+
   position: relative;
   background-color: var(--pokemon-blue);
 }
 
-main {
-  flex: 1;
-}
 header {
   display: flex;
   flex-flow: row wrap;
@@ -118,6 +110,7 @@ header {
 }
 
 /* ------------------------------ Modal ---------------------------------------- */
+
 .modal-container {
   position: fixed;
   top: 0;
@@ -154,6 +147,7 @@ header {
 
 .modal-card {
   background-color: var(--blue-light);
+  background-image: url(/assets/body_bg.png);
   width: 400px;
   border-radius: 16px;
   color: white;
@@ -186,7 +180,8 @@ header {
 }
 
 .pokemon-info-container {
-  background-color: var(--blue-dark);
+
+  background-color: var(--black-color);
   display: flex;
   flex-direction: column;
   border-radius: 16px 16px 0 0;
@@ -197,7 +192,7 @@ header {
   display: flex;
   justify-content: space-evenly;
 
-  padding: 6px 0px 0 0;
+  padding: 2px 0px 0 0;
   height: 50px;
 }
 
@@ -212,18 +207,18 @@ header {
 }
 
 .tab:not(.active-tab):hover {
-  background-color: var(--blue-light);
+  background-color: rgb(78, 78, 78);
 }
 
 .active-tab {
-  background-color: var(--blue-light);
+  background-color: rgb(78, 78, 78);
+
   z-index: 2;
   position: relative;
 }
 
 .tab-content {
-  background-color: var(--blue-light);
-
+  background-image: url(/assets/body_bg.png);
   height: 300px;
   overflow-y: auto;
   display: none;

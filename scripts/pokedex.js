@@ -113,7 +113,17 @@ async function getPokemonAbilityDetails(url) {
     console.error("Fehler beim Abrufen der Pokémon-Daten:", error);
   }
 }
-
+async function getEvolutionChain(id) {
+  try {
+    let res = await fetch(`https://pokeapi.co/api/v2/evolution-chain/${id}`);
+    if (!res.ok) {
+      throw new Error(`HTTP Error! Status: ${res.status}`);
+    }
+    return await res.json();
+  } catch (error) {
+    console.error("Fehler beim Abrufen der Pokémon-Daten:", error);
+  }
+}
 //------------------------------------------------------------------------------------//
 
 async function loadPokemonCards(currentOffset = offset) {
@@ -125,6 +135,7 @@ async function loadPokemonCards(currentOffset = offset) {
       const speciesData = await getPokemonSpeciesDetails(
         singlePokemonData.species.url
       );
+     
       const abilityDescriptions = [];
       for (const ability of singlePokemonData.abilities) {
         const description = await getPokemonAbilityDetails(ability.ability.url);
@@ -247,6 +258,7 @@ async function showModalForPokemon(pokemonID) {
   modal.style.display = "flex";
   let pokeID = found.speciesData.id;
   showModalCardTabs();
+  showEvolutionChain(pokeID);
   nextPokemon(pokeID);
   prevPokemon(pokeID);
   closeModal();
@@ -389,3 +401,40 @@ function closeModal() {
       event.stopPropagation();
     });
 }
+
+
+//evolution chain
+
+async function showEvolutionChain(pokeId){
+  const evolutionChainData = await getEvolutionChain(pokeId);
+  console.log(evolutionChainData)
+  console.log(evolutionChainData.chain.species.name); //Name base
+  console.log(evolutionChainData.chain.evolves_to[0].species.name) // zweite Entwicklung
+  console.log(evolutionChainData.chain.evolves_to[0].evolves_to[0].species.name) // dritte Entwicklung....
+
+  // function getEvolutionChain(chain) {
+  //   let evolutionArray = [];
+  
+  //   function traverse(evolutionNode) {
+  //     // Füge den aktuellen Pokémon-Namen zur Liste hinzu
+  //     evolutionArray.push(evolutionNode.species.name);
+  
+  //     // Wenn es weitere Entwicklungen gibt, gehe rekursiv weiter
+  //     if (evolutionNode.evolves_to.length > 0) {
+  //       evolutionNode.evolves_to.forEach(nextEvolution => {
+  //         traverse(nextEvolution);
+  //       });
+  //     }
+  //   }
+  
+    // Startpunkt ist der Anfang der Kette
+  //   traverse(chain);
+  
+  //   return evolutionArray;
+  // }
+  
+
+  // console.log(getEvolutionChain(evolutionChainData.chain));
+
+}
+

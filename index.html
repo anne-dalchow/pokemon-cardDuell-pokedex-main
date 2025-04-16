@@ -6,14 +6,27 @@
     <title>Pokemon - Card Duell</title>
     <link rel="stylesheet" href="./styles/standard.css" />
     <link rel="stylesheet" href="./styles/style.css" />
+        <!-- FontAwesome CDN -->
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      />
+    <script src="./scripts/togglenav.js" defer></script>
     <script src="./scripts/game.js" defer></script>
   </head>
   <body>
-    <nav>
-      <a href="pokedex.html">Pokedex</a>
-      <a href="index.html#instruction">Instruction</a>
-      <a href="index.html#start-game">Start Game</a>
-    </nav>
+    
+      <nav class="navbar">
+        <div class="logo">Pokémon</div>
+        <button class="menu-toggle" aria-label="Menü öffnen">&#9776;</button>
+        <div class="nav-links">
+          <a href="pokedex.html">Pokedex</a>
+          <a href="index.html#instruction">Instruction</a>
+          <a href="index.html#start-game">Start Game</a>
+        </div>
+      </nav>
+
+  
 
     <main>
       <header class="hero">
