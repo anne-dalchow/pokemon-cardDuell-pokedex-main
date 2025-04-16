@@ -55,12 +55,12 @@ async function loadData() {
 
 function displayHidden() {
   document.querySelector(".loadMore-spinner").style.display = "none";
-  document.querySelector(".search-input-field").style.display = "none";
+  document.querySelector(".search-container").style.display = "none";
   document.querySelector(".loadmore-container").style.display = "none";
 }
 
 function displayVisible() {
-  document.querySelector(".search-input-field").style.display = "flex";
+  document.querySelector(".search-container").style.display = "flex";
   document.querySelector(".loadmore-container").style.display = "flex";
 }
 
@@ -122,7 +122,9 @@ async function loadPokemonCards(currentOffset = offset) {
   const newPokemonData = await Promise.all(
     pokemonList.results.map(async (pokemon) => {
       const singlePokemonData = await getAllPokemonData(pokemon.name);
-      const speciesData = await getPokemonSpeciesDetails(singlePokemonData.species.url);
+      const speciesData = await getPokemonSpeciesDetails(
+        singlePokemonData.species.url
+      );
       const abilityDescriptions = [];
       for (const ability of singlePokemonData.abilities) {
         const description = await getPokemonAbilityDetails(ability.ability.url);
@@ -145,12 +147,13 @@ async function loadPokemonCards(currentOffset = offset) {
   // so werden Daten anhängt, nicht ersetzen -> spread synthax
   pokemonDataArray.push(...newPokemonData);
 
-  newPokemonData.forEach(({ currentPokemon, speciesData, abilityDescriptions }) => {
-    pokemons.push(currentPokemon);
-    createPokemonCard(currentPokemon, speciesData, abilityDescriptions);
-  });
+  newPokemonData.forEach(
+    ({ currentPokemon, speciesData, abilityDescriptions }) => {
+      pokemons.push(currentPokemon);
+      createPokemonCard(currentPokemon, speciesData, abilityDescriptions);
+    }
+  );
 }
-
 
 function createPokemonCard(currentPokemon, speciesData, abilityDescriptions) {
   const template = document.getElementById("pokemon-card-template");
@@ -225,7 +228,6 @@ async function loadMoreData() {
   // }
 }
 
-
 // ------------------------------- Modal Card ------------------------- //
 async function showModalForPokemon(pokemonID) {
   let found = pokemonDataArray.find(
@@ -238,13 +240,15 @@ async function showModalForPokemon(pokemonID) {
   }
   let { currentPokemon, speciesData, abilityDescriptions } = found;
   let moreData = await getAllPokemonData(currentPokemon.name);
-  console.log(moreData);
 
   showModalHeader(currentPokemon, speciesData);
   showModalAboutStats(abilityDescriptions, moreData);
   showModalBaseStats(moreData);
   modal.style.display = "flex";
+  let pokeID = found.speciesData.id;
   showModalCardTabs();
+  nextPokemon(pokeID);
+  prevPokemon(pokeID);
   closeModal();
 }
 
@@ -260,19 +264,16 @@ function showModalHeader(currentPokemon, speciesData) {
   // Alle Klassen, die mit "color-" beginnen, entfernen
   pokeimgHeader.className = pokeimgHeader.className
     .split(" ")
-    .filter(className => !className.startsWith("color-"))
+    .filter((className) => !className.startsWith("color-"))
     .join(" ");
 
-  // Neue Farbe hinzufügen
   pokeimgHeader.classList.add(`color-${originalColor}`);
 }
 
 function showModalAboutStats(abilityDescriptions, moreData) {
   const abilitiesContainer = modal.querySelector(".abilities-container");
-  // Vorher alles leeren
   abilitiesContainer.innerHTML = "";
 
-  // Dann dynamisch befüllen
   moreData.abilities.forEach((abilityObj, index) => {
     const abilityName = abilityObj.ability.name;
     let description = "No description available.";
@@ -344,6 +345,37 @@ function updateTabsContent(tab, infoBoxes) {
   const targetClass = tab.dataset.target;
   const targetBox = document.querySelector(`.${targetClass}`);
   if (targetBox) targetBox.style.display = "flex";
+}
+
+const prevArrow = document.getElementById("prev-arrow");
+const nextArrow = document.getElementById("next-arrow");
+
+function nextPokemon(pokeID) {
+  nextArrow.onclick = () => {
+    let nextPokeId = pokeID + 1;
+    let exist = pokemonDataArray.find(
+      ({ speciesData }) => speciesData.id === nextPokeId
+    );
+    exist
+      ? showModalForPokemon(nextPokeId)
+      : console.error("Pokemon not found");
+  };
+}
+
+function prevPokemon(pokeID) {
+  let prevPokeID = pokeID - 1;
+  prevPokeID < 1
+    ? (prevArrow.style.visibility = "hidden")
+    : (prevArrow.style.visibility = "visible");
+
+  prevArrow.onclick = () => {
+    let exist = pokemonDataArray.find(
+      ({ speciesData }) => speciesData.id === prevPokeID
+    );
+    exist
+      ? showModalForPokemon(prevPokeID)
+      : console.error("Pokemon not found");
+  };
 }
 
 function closeModal() {
