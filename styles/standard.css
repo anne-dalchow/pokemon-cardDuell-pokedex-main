@@ -196,7 +196,6 @@ button:enabled {
     display: none;
     width: 100%;
     flex-direction: column;
-    margin-top: 19px;
     background-color: var(--black-color);
     z-index: 99999;
   }
