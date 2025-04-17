@@ -1,41 +1,55 @@
 
 body {
-
   position: relative;
   background-color: var(--pokemon-blue);
 }
 
-header {
+.pokedex-wrapper {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-end;
-  padding: 40px;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  max-width: 1400px;
+  margin: auto;
+}
+header{
+  margin-top: 50px;
+}
+header img{
+  width: 450px;
 }
 
 .search-container {
   position: relative;
+  width: 500px;
+  margin: 24px;
+  padding: 16px;
 }
 
 .search-container .fa-search {
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: 28px;
   transform: translateY(-50%);
-  color: gray;
+  color: rgb(192, 192, 192);
 }
 
 #search-input-pokemon {
-  width: 300px;
+  width: 100%;
   height: 32px;
   border-radius: 16px;
   border: none;
-  padding: 8px 16px 8px 32px;
+  padding: 8px 16px 8px 36px;
   font-size: 14px;
+  background-color: rgba(2, 0, 22, 0.7);
 }
+#search-input-pokemon:focus{
+  background-color: white;
+}
+input::placeholder {
+  color: rgb(192, 192, 192);
 
-.pokedex-wrapper {
-  max-width: 1400px;
-  margin: 40px auto;
 }
 
 #pokemon-cards-container {
@@ -43,7 +57,7 @@ header {
   flex-flow: row wrap;
   justify-content: center;
   gap: 64px;
-  margin-bottom: 64px;
+  margin: 64px 0px;
 }
 .first-loader-container,
 .loadmore-container {
@@ -127,7 +141,7 @@ header {
 .warn-container{
   color: red;
 }
-.fa-magnifying-glass,
+
 .fa-circle-chevron-right,
 .fa-circle-chevron-left {
   color: white;
@@ -310,4 +324,54 @@ progress::-moz-progress-bar {
   display: flex;
   align-items: center;
   gap: 24px;
+}
+
+
+
+
+@media (max-width: 500px) {
+  .search-container{
+    width: 100%;
+  }
+  header img{
+    max-width: 300px;
+  }
+  #pokemon-cards-container {
+    gap: 32px;
+    margin: 32px 0px;
+  }
+  .card {
+    width: 175px;
+  }
+  .card:hover {
+    transform: scale(1);
+  }
+  .pokemon-img-container img {
+    width: 150px;
+  }
+
+  .modal {
+    gap: 0px;
+    padding: 8px;
+  }
+  
+  .modal-card {
+    width: 100%;
+  }
+  .fa-circle-chevron-right,
+.fa-circle-chevron-left {
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  position: absolute;
+}
+.fa-circle-chevron-left{
+  bottom: 16px;
+  left: 16px;
+}
+.fa-circle-chevron-right{
+  bottom: 16px;
+  right: 16px;
+}
+  
 }
