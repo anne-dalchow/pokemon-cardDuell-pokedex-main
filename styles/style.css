@@ -15,10 +15,12 @@
 
 .hero-pokemon-logo img {
   width: 500px;
+  filter: drop-shadow(1px 2px 2px rgb(0, 0, 0));
 }
 
 .hero-pokemon-logo {
   max-width: 100%;
+
 }
 
 .hero-logo {
@@ -57,6 +59,7 @@
 
 .hero-links .game-hero-btn {
   background-color: var(--pokemon-yellow);
+  filter: drop-shadow(1px 1px 2px rgb(46, 46, 46));
   color: black;
   padding: 10px 15px;
   border-radius: var(--border-radius-10);
@@ -73,15 +76,6 @@
   &:last-child:hover {
     color: black;
   }
-}
-
-.hero-text h1 {
-  font-size: 3rem;
-  color: white;
-}
-
-.hero-text p {
-  font-size: 1.5rem;
 }
 
 .hero-logo img {
@@ -111,17 +105,12 @@
 
 .instruction-text div button {
   border-radius: var(--border-radius-10);
-  font-size: 1.5rem;
   border: none;
   padding: 7px 15px;
 }
 
 .instruction-img {
   width: 30%;
-}
-
-.instruction-img img {
-  width: 100%;
 }
 
 /****************************** Game *******************************/
@@ -205,17 +194,6 @@
   padding: 0 20px 50px 20px;
   border: 5px solid var(--pokemon-yellow);
   box-shadow: 0px -10px 10px rgba(0, 0, 0, 0.5);
-}
-
-img {
-  width: 100%;
-  /* Feste Breite für die Pokémon-Bilder */
-  height: auto;
-  /* Höhe anpassen für das Seitenverhältnis */
-  border-radius: 15px;
-  /* Abrundung der Ecken */
-  margin-bottom: 15px;
-  /* Abstand nach unten */
 }
 
 .card {
