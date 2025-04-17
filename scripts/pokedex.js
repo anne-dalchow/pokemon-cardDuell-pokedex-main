@@ -113,17 +113,7 @@ async function getPokemonAbilityDetails(url) {
     console.error("Fehler beim Abrufen der Pokémon-Daten:", error);
   }
 }
-async function getEvolutionChain(id) {
-  try {
-    let res = await fetch(`https://pokeapi.co/api/v2/evolution-chain/${id}`);
-    if (!res.ok) {
-      throw new Error(`HTTP Error! Status: ${res.status}`);
-    }
-    return await res.json();
-  } catch (error) {
-    console.error("Fehler beim Abrufen der Pokémon-Daten:", error);
-  }
-}
+
 //------------------------------------------------------------------------------------//
 
 async function loadPokemonCards(currentOffset = offset) {
@@ -403,38 +393,67 @@ function closeModal() {
 }
 
 
-//evolution chain
+async function showEvolutionChain(pokeID) {
+  const found = pokemonDataArray.find(
+    ({ currentPokemon }) => currentPokemon.id === pokeID
+  );
+  if (!found) {
+    console.error("Pokémon nicht gefunden für Evolution Chain!");
+    return;
+  }
 
-async function showEvolutionChain(pokeId){
-  const evolutionChainData = await getEvolutionChain(pokeId);
-  console.log(evolutionChainData)
-  console.log(evolutionChainData.chain.species.name); //Name base
-  console.log(evolutionChainData.chain.evolves_to[0].species.name) // zweite Entwicklung
-  console.log(evolutionChainData.chain.evolves_to[0].evolves_to[0].species.name) // dritte Entwicklung....
+  const speciesData = found.speciesData;
+  const evoChainUrl = speciesData.evolution_chain.url;
 
-  // function getEvolutionChain(chain) {
-  //   let evolutionArray = [];
-  
-  //   function traverse(evolutionNode) {
-  //     // Füge den aktuellen Pokémon-Namen zur Liste hinzu
-  //     evolutionArray.push(evolutionNode.species.name);
-  
-  //     // Wenn es weitere Entwicklungen gibt, gehe rekursiv weiter
-  //     if (evolutionNode.evolves_to.length > 0) {
-  //       evolutionNode.evolves_to.forEach(nextEvolution => {
-  //         traverse(nextEvolution);
-  //       });
-  //     }
-  //   }
-  
-    // Startpunkt ist der Anfang der Kette
-  //   traverse(chain);
-  
-  //   return evolutionArray;
-  // }
-  
+  try {
+    const response = await fetch(evoChainUrl);
+    const data = await response.json();
+    const evolutionList = [];
 
-  // console.log(getEvolutionChain(evolutionChainData.chain));
+    traverseEvolutionChain(data.chain, evolutionList);
+    renderEvolutionChain(evolutionList);
 
+  } catch (error) {
+    console.error("Fehler beim Laden der Evolution Chain:", error);
+  }
 }
 
+function traverseEvolutionChain(chainNode, resultArray) {
+  resultArray.push(chainNode.species.name);
+
+  if (chainNode.evolves_to.length > 0) {
+    for (const nextEvolution of chainNode.evolves_to) {
+      traverseEvolutionChain(nextEvolution, resultArray);
+    }
+  }
+}
+
+async function renderEvolutionChain(evolutionList) {
+  const container = document.querySelector(".evo-chain-info");
+  container.innerHTML = "";
+
+  for (let i = 0; i < evolutionList.length; i++) {
+    const name = evolutionList[i];
+    
+    // Hole Bilddaten für jedes Pokémon
+    const pokeData = await getAllPokemonData(name);
+    const imgURL = pokeData.sprites.other["official-artwork"].front_default;
+
+    // Erstelle das Bild-Element
+    const img = document.createElement("img");
+    img.src = imgURL;
+    img.alt = name;
+    img.title = name;
+    img.classList.add("evo-img");
+
+    container.appendChild(img);
+
+    // Pfeil zwischen den Bildern, außer nach dem letzten
+    if (i < evolutionList.length - 1) {
+      const arrow = document.createElement("span");
+      arrow.innerHTML = `<i class="fa-solid fa-arrow-right"></i>`;
+      arrow.classList.add("evo-arrow");
+      container.appendChild(arrow);
+    }
+  }
+}

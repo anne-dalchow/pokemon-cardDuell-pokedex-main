@@ -313,10 +313,20 @@ progress::-moz-progress-bar {
   border-radius: 10px 0 0 10px;
 }
 
-.evochain-container {
+.evo-chain-info {
   display: flex;
+  flex-flow: row wrap;
   align-items: center;
-  gap: 24px;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 0;
+}
+.evo-img {
+  width: 80px;
+  height: auto;
+}
+.evo-arrow {
+  font-size: 20px;
 }
 
 @media (max-width: 500px) {
