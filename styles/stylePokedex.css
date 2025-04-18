@@ -286,9 +286,13 @@ input::placeholder {
 .tab-content.active {
   display: block;
 }
+.progress-wrapper {
+  position: relative;
+  width: 100%;
+}
 
-progress {
-  height: 12px;
+progress{
+  height: 16px;
   appearance: none;
   -webkit-appearance: none;
   border: none;
@@ -298,18 +302,27 @@ progress {
   flex: 1;
 }
 
+.progressvalue {
+  position: absolute;
+  left: 70%;
+  transform: translateX(-50%);
+  top: 4px; /* leicht anpassen je nach Höhe */
+  color: black;
+  font-size: 12px;
+}
+
 progress::-webkit-progress-bar {
-  background-color: #ccc;
+  background-color: #ffffff;
   border-radius: 10px;
 }
 
 progress::-webkit-progress-value {
-  background-color: var(--pokemon-blue, #4852e4);
+  background-color: var(--light-blue-var1, #48e45d);
   border-radius: 10px 0 0 10px;
 }
 
 progress::-moz-progress-bar {
-  background-color: var(--pokemon-blue, #4852e4);
+  background-color: var(--light-blue-var1, #48e47c);
   border-radius: 10px 0 0 10px;
 }
 
@@ -366,5 +379,8 @@ progress::-moz-progress-bar {
   }
   .fa-circle-chevron-right {
     right: 16px;
+  }
+  .progressvalue {
+    left: 70%;
   }
 }

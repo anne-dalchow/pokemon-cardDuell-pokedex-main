@@ -125,7 +125,7 @@ async function loadPokemonCards(currentOffset = offset) {
       const speciesData = await getPokemonSpeciesDetails(
         singlePokemonData.species.url
       );
-     
+
       const abilityDescriptions = [];
       for (const ability of singlePokemonData.abilities) {
         const description = await getPokemonAbilityDetails(ability.ability.url);
@@ -133,10 +133,13 @@ async function loadPokemonCards(currentOffset = offset) {
       }
 
       const types = singlePokemonData.types.map((type) => type.type.name);
+      const capitalizedName =
+        singlePokemonData.name.charAt(0).toUpperCase() +
+        singlePokemonData.name.slice(1);
 
       const currentPokemon = {
         id: singlePokemonData.id,
-        name: singlePokemonData.name,
+        name: capitalizedName,
         image: singlePokemonData.sprites.other.home.front_default,
         types: types,
       };
@@ -304,16 +307,28 @@ function showModalAboutStats(abilityDescriptions, moreData) {
 }
 
 function showModalBaseStats(moreData) {
-  let stats = moreData.stats;
-  document.querySelector(".height progress").value = moreData.height;
-  document.querySelector(".weight progress").value = moreData.weight;
-  document.querySelector(".hp progress").value = stats[0].base_stat;
-  document.querySelector(".attack progress").value = stats[1].base_stat;
-  document.querySelector(".defense progress").value = stats[2].base_stat;
-  document.querySelector(".special-attack progress").value = stats[3].base_stat;
-  document.querySelector(".special-defense progress").value =
-    stats[4].base_stat;
-  document.querySelector(".speed progress").value = stats[5].base_stat;
+  const { height, weight, stats } = moreData;
+
+  const updateStat = (className, value) => {
+    document.querySelector(`.${className} progress`).value = value;
+    document.querySelector(`.${className}-text`).innerText = value;
+  };
+
+  updateStat("height", height);
+  updateStat("weight", weight);
+
+  const statMap = [
+    "hp",
+    "attack",
+    "defense",
+    "special-attack",
+    "special-defense",
+    "speed",
+  ];
+
+  statMap.forEach((name, index) => {
+    updateStat(name, stats[index].base_stat);
+  });
 }
 
 function showModalCardTabs() {
@@ -392,7 +407,6 @@ function closeModal() {
     });
 }
 
-
 async function showEvolutionChain(pokeID) {
   const found = pokemonDataArray.find(
     ({ currentPokemon }) => currentPokemon.id === pokeID
@@ -412,7 +426,6 @@ async function showEvolutionChain(pokeID) {
 
     traverseEvolutionChain(data.chain, evolutionList);
     renderEvolutionChain(evolutionList);
-
   } catch (error) {
     console.error("Fehler beim Laden der Evolution Chain:", error);
   }
@@ -434,7 +447,7 @@ async function renderEvolutionChain(evolutionList) {
 
   for (let i = 0; i < evolutionList.length; i++) {
     const name = evolutionList[i];
-    
+
     // Hole Bilddaten für jedes Pokémon
     const pokeData = await getAllPokemonData(name);
     const imgURL = pokeData.sprites.other["official-artwork"].front_default;
