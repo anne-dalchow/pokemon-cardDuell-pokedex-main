@@ -6,15 +6,18 @@ let playerScore = 0;
 let computerScore = 0;
 let totalRounds = 6;
 let turnsRemaining = totalRounds;
-
 const comparisonCategories = ["attack", "defense", "speed", "hp"];
 let currentCategory;
-
 
 document.getElementById("start-game").addEventListener("click", () => {
   loadPokemonData();
 });
 
+/**
+ * Fetches Pokémon data by ID from the API.
+ * @param {number} id - The Pokémon ID.
+ * @returns {Promise<Object|null>} The Pokémon data object or null if fetch fails.
+ */
 function getPokemon(id) {
   return fetch(`https://pokedex.mimo.dev/api/pokemon/${id}`)
     .then((response) => {
@@ -27,12 +30,15 @@ function getPokemon(id) {
     });
 }
 
+/**
+ * Loads Pokémon data for both player and computer, then displays the cards.
+ * @returns {void}
+ */
 function loadPokemonData() {
   playerCards = [];
   computerCards = [];
   let promises = [];
   for (let i = 0; i < 6; i++) {
-    // Lade 6 Pokémon für den Spieler
     const id = Math.floor(Math.random() * 1000) + 1;
     promises.push(
       getPokemon(id).then((pokemon) => {
@@ -43,7 +49,6 @@ function loadPokemonData() {
     );
   }
   for (let i = 0; i < 6; i++) {
-    // Lade 6 Pokémon für den Computer
     const id = Math.floor(Math.random() * 1000) + 1;
     promises.push(
       getPokemon(id).then((pokemon) => {
@@ -62,7 +67,10 @@ function loadPokemonData() {
   document.getElementById("game-area").style.display = "flex";
 }
 
-// Anzeige der Spieler-Karten
+/**
+ * Displays all player cards in the UI.
+ * @returns {void}
+ */
 function displayPlayerCards() {
   const playerCardsDiv = document.getElementById("player-cards");
   playerCardsDiv.innerHTML = "";
@@ -86,7 +94,10 @@ function displayPlayerCards() {
   });
 }
 
-// Anzeige der Computerkarte mit Fragezeichen
+/**
+ * Displays a random computer card (hidden) and sets the current category.
+ * @returns {void}
+ */
 function displayComputerCard() {
   const randomIndex = Math.floor(Math.random() * computerCards.length);
   currentComputerCard = computerCards[randomIndex];
@@ -110,7 +121,11 @@ function displayComputerCard() {
   currentCategory = updateCurrentCategory();
 }
 
-// Karte des Spielers auswählen
+/**
+ * Selects a player card by index and enables the compare button.
+ * @param {number} index - Index of the selected player card.
+ * @returns {void}
+ */
 function selectPlayerCard(index) {
   currentPlayerCard = playerCards[index];
   document
@@ -122,6 +137,10 @@ function selectPlayerCard(index) {
   document.getElementById("compare-cards").disabled = false;
 }
 
+/**
+ * Displays the selected player card in the UI.
+ * @returns {void}
+ */
 function displaySelectedPlayerCard() {
   document.getElementById("selected-player-card").innerHTML = `
             <div class="card">
@@ -137,13 +156,19 @@ function displaySelectedPlayerCard() {
         `;
 }
 
-// Funktion zum Aktualisieren des Rundenzählers
+/**
+ * Updates the round counter in the UI.
+ * @returns {void}
+ */
 function updateRoundCounter() {
   const currentRound = totalRounds - turnsRemaining + 1;
   document.getElementById("round-counter").innerText = `Round ${currentRound}`;
 }
 
-// Aktuelle Kategorie für den Vergleich auswählen
+/**
+ * Selects a random category for comparison and updates the UI.
+ * @returns {string} The selected category.
+ */
 function updateCurrentCategory() {
   const randomIndex = Math.floor(Math.random() * comparisonCategories.length);
   const currentCategory = comparisonCategories[randomIndex];
@@ -154,7 +179,11 @@ function updateCurrentCategory() {
   return currentCategory;
 }
 
-// Aktualisierung des Punktestands
+/**
+ * Updates the score based on the winner and checks for game end.
+ * @param {string} winner - "Player", "Computer", or "Draw".
+ * @returns {void}
+ */
 function updateScore(winner) {
   if (winner === "Player") {
     playerScore++;
@@ -163,11 +192,9 @@ function updateScore(winner) {
   }
   turnsRemaining--;
 
-  // Punktestände und verbleibende Züge aktualisieren
   document.getElementById("player-score").innerText = playerScore;
   document.getElementById("computer-score").innerText = computerScore;
 
-  // Überprüfen, ob das Spiel vorbei ist
   if (turnsRemaining === 0) {
     const finalResult =
       playerScore > computerScore
@@ -179,7 +206,11 @@ function updateScore(winner) {
   }
 }
 
-// Modal für das Endergebnis anzeigen
+/**
+ * Shows the final result in a modal dialog.
+ * @param {string} message - The result message to display.
+ * @returns {void}
+ */
 function showFinalResult(message) {
   const modal = document.getElementById("modal");
   document.getElementById("final-result").innerText = message;
@@ -189,7 +220,10 @@ function showFinalResult(message) {
   document.getElementById("game-area").style.display = "none";
 }
 
-// Funktion zur Anzeige der vollständigen Computerkarte und der ausgewählten Spielerkarte im Vergleichsfeld
+/**
+ * Displays the full computer card after comparison.
+ * @returns {void}
+ */
 function displayFullComputerCard() {
   document.getElementById("selected-computer-card").innerHTML = `
       <div class="card">
@@ -204,7 +238,7 @@ function displayFullComputerCard() {
       </div>
   `;
 }
-// Event-Listener für den Vergleichs-Button
+
 document.getElementById("compare-cards").addEventListener("click", () => {
   if (!currentPlayerCard) {
     alert("Please choose a card!");
@@ -213,7 +247,6 @@ document.getElementById("compare-cards").addEventListener("click", () => {
   let playerValue, computerValue;
   document.getElementById("comparison-field").style.display = "flex";
 
-  // Die bereits festgelegte Kategorie verwenden
   switch (currentCategory) {
     case "attack":
       playerValue = currentPlayerCard.stats[1].base_stat;
@@ -241,7 +274,7 @@ document.getElementById("compare-cards").addEventListener("click", () => {
   } else {
     winner = "Draw";
   }
-  // Rundengewinner anzeigen
+
   document.getElementById("round-result").textContent = `${winner} win`;
   updateScore(winner);
 
@@ -251,28 +284,20 @@ document.getElementById("compare-cards").addEventListener("click", () => {
   setTimeout(() => {
     document.getElementById("comparison-field").style.display = "none";
     if (computerCards.length > 0) {
-      displayComputerCard(); // Neue verdeckte Computerkarte anzeigen
+      displayComputerCard(); 
     } else {
       console.log("No more computer cards left!");
     }
   }, 3000);
-  // Entferne die gespielte Karte aus dem Spieler-Karten-Array
   const index = playerCards.indexOf(currentPlayerCard);
   if (index > -1) {
-    playerCards.splice(index, 1); // Entferne die Karte
+    playerCards.splice(index, 1); 
   }
 
-  // Setze die aktuell ausgewählte Karte auf null zurück
   currentPlayerCard = null;
-
-  // Aktualisiere die Anzeige der Spieler-Karten
   document.getElementById("player-cards").innerHTML = "";
   displayPlayerCards();
-
   document.getElementById("compare-cards").disabled = true;
 });
 
-// Event-Listener für das Schließen des Modals
-document.getElementById("close-modal").addEventListener("click", () => {
-  location.reload();
-});
+Modals

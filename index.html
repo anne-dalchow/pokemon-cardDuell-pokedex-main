@@ -1,178 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pokemon - Card Duell</title>
-    <link rel="stylesheet" href="./styles/standard.css" />
-    <link rel="stylesheet" href="./styles/style.css" />
-        <!-- FontAwesome CDN -->
-        <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      />
-    <script src="./scripts/togglenav.js" defer></script>
-    <script src="./scripts/game.js" defer></script>
-  </head>
-  <body>
-    
-      <nav class="navbar">
-        <div class="logo">
-          <img src="./assets/Pokebola-pokeball-png-0.png" alt="">
-          <p>Pokémon</p>
-        </div>
-        <button id="menu-toggle" aria-label="Menü öffnen">&#9776;</button>
-        <div class="nav-links">
-          <a href="pokedex.html">Pokédex</a>
-          <a href="index.html#instruction">Instruction</a>
-          <a href="index.html#start-game">Start Game</a>
-        </div>
-      </nav>
 
-  
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokemon - Card Duell</title>
+  <link rel="stylesheet" href="./styles/standard.css" />
+  <link rel="stylesheet" href="./styles/style.css" />
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="./scripts/togglenav.js" defer></script>
+  <script src="./scripts/game.js" defer></script>
+</head>
 
-    <main>
-      <header class="hero">
-        <div class="hero-pokemon-logo">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg"
-            alt="Pokemon Logo"
-          />
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <img src="./assets/Pokebola-pokeball-png-0.png" alt="">
+      <p>Pokémon</p>
+    </div>
+    <button id="menu-toggle" aria-label="Menü öffnen">&#9776;</button>
+    <div class="nav-links">
+      <a href="pokedex.html">Pokédex</a>
+      <a href="index.html#instruction">Instruction</a>
+      <a href="index.html#start-game">Start Game</a>
+    </div>
+  </nav>
+
+
+
+  <main>
+    <header class="hero">
+      <div class="hero-pokemon-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg"
+          alt="Pokemon Logo" />
+      </div>
+
+      <div class="hero-second-section">
+        <div class="hero-logo">
+          <img src="https://i.ibb.co/XtDPg6R/3.png" alt="Pikatchu" />
         </div>
-
-        <div class="hero-second-section">
-          <div class="hero-logo">
-            <img src="https://i.ibb.co/XtDPg6R/3.png" alt="Pikatchu" />
-          </div>
-          <div class="hero-text">
-            <h1>Duell Card Game</h1>
-            <p>
-              Put your Pokémon team to the test and face off <br />
-              against the computer in an epic card duel! <br />
-            </p>
-            <p>
-              Compare your cards' stats and see if you have <br />
-              what it takes to become the ultimate champion. <br />
-              Are you ready to prove your skills?
-            </p>
-            <div class="hero-links">
-              <a href="#start-game" class="game-hero-btn">Start Game</a>
-              <a href="#instruction">Instruction</a>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <section class="instruction" id="instruction">
-        <div class="instruction-text">
-          <h2>Game Instruction</h2>
-          <hr />
+        <div class="hero-text">
+          <h1>Duell Card Game</h1>
           <p>
-            In this Pokémon Duel Card Game, you'll face off against the computer
-            in a battle of strategy and skill over 7 intense rounds. <br />
-            Both you and the computer are dealt 6 random Pokémon cards, each
-            with different stats like HP, Speed, and more. <br />
-            The game randomly selects which stat to compare in each round, such
-            as HP or Speed, <br />
-            and the computer lays down its card first, revealing its stat.
-            <br />
+            Put your Pokémon team to the test and face off <br />
+            against the computer in an epic card duel! <br />
           </p>
           <p>
-            Your challenge is to choose a card from your hand that has a higher
-            value in the required stat to win the round. <br />
-            But be careful! You won't always have the higher numbers, and
-            sometimes you'll need to think ahead and play tactically. <br />
-            Knowing when to use your strongest cards and when to hold back for
-            later rounds can make all the difference. <br />
+            Compare your cards' stats and see if you have <br />
+            what it takes to become the ultimate champion. <br />
+            Are you ready to prove your skills?
           </p>
-          <p>
-            The goal is simple: win as many duels as possible by outsmarting the
-            computer. <br />
-            With each round, you'll feel the tension rise as you get closer to
-            the final result. <br />
-            Will you emerge victorious with the most duel wins, or will the
-            computer outplay you? <br />
-            <br />
-            <br />
-          </p>
-          <hr />
-          <div>
-            <p>
-              <span class="bold"
-                >It's time to shuffle the deck and find out!</span
-              >
-            </p>
-            <br />
-            <br />
-            <button id="start-game" class="start-btn">Start Game</button>
-          </div>
-        </div>
-        <div class="instruction-img">
-          <img
-            src="https://i.ibb.co/5vsMR1h/pokemoncard-02.png"
-            alt="pokemoncard-02"
-          />
-        </div>
-      </section>
-
-      <div id="game-container">
-        <div id="game-area" style="display: none">
-          <div id="scoreboard">
-            <div class="scoreboard-details">
-              <p>Computer: <span id="computer-score">0</span></p>
-            </div>
-            <div class="scoreboard-vs-sign">VS</div>
-
-            <div class="scoreboard-details">
-              <p>Player: <span id="player-score">0</span></p>
-            </div>
-          </div>
-          <div id="computer-card" style="display: none"></div>
-          <div class="scoreboard-round-compare">
-            <p id="round-counter"></p>
-            <p id="current-category"></p>
-          </div>
-
-          <div id="comparison-field">
-            <div id="comparison-field-cards">
-              <div id="selected-computer-card"></div>
-              <div id="selected-player-card"></div>
-            </div>
-            <div id="round-result"></div>
-          </div>
-
-          <div class="player-cards-container">
-            <span class="bold-large">Player</span>
-            <div id="player-cards"></div>
-            <button id="compare-cards" disabled>Play Card</button>
+          <div class="hero-links">
+            <a href="#start-game" class="game-hero-btn">Start Game</a>
+            <a href="#instruction">Instruction</a>
           </div>
         </div>
       </div>
-      <!-- Modal für das Endergebnis -->
-      <div id="modal">
-        <div id="modal-content">
-          <h2>Game Over</h2>
+    </header>
 
-          <div class="pixel-block">
-            <div class="pixelized-heart"></div>
-          </div>
-
-          <h3 id="final-result"></h3>
-
-          <button id="close-modal">Close</button>
-        </div>
-      </div>
-    </main>
-
-    <footer>
-      <div class="footer-disclamer">
+    <section class="instruction" id="instruction">
+      <div class="instruction-text">
+        <h2>Game Instruction</h2>
+        <hr />
         <p>
-          Pokémon images, names, and logos are trademarks of Nintendo, Creatures
-          Inc., and GAME FREAK. All rights reserved. This project is a fan-made
-          creation and is not affiliated with or endorsed by Nintendo, Creatures
-          Inc., or GAME FREAK.
+          In this Pokémon Duel Card Game, you'll face off against the computer
+          in a battle of strategy and skill over 7 intense rounds. <br />
+          Both you and the computer are dealt 6 random Pokémon cards, each
+          with different stats like HP, Speed, and more. <br />
+          The game randomly selects which stat to compare in each round, such
+          as HP or Speed, <br />
+          and the computer lays down its card first, revealing its stat.
+          <br />
         </p>
+        <p>
+          Your challenge is to choose a card from your hand that has a higher
+          value in the required stat to win the round. <br />
+          But be careful! You won't always have the higher numbers, and
+          sometimes you'll need to think ahead and play tactically. <br />
+          Knowing when to use your strongest cards and when to hold back for
+          later rounds can make all the difference. <br />
+        </p>
+        <p>
+          The goal is simple: win as many duels as possible by outsmarting the
+          computer. <br />
+          With each round, you'll feel the tension rise as you get closer to
+          the final result. <br />
+          Will you emerge victorious with the most duel wins, or will the
+          computer outplay you? <br />
+          <br />
+          <br />
+        </p>
+        <hr />
+        <div>
+          <p>
+            <span class="bold">It's time to shuffle the deck and find out!</span>
+          </p>
+          <br />
+          <br />
+          <button id="start-game" class="start-btn">Start Game</button>
+        </div>
       </div>
-    </footer>
-  </body>
+      <div class="instruction-img">
+        <img src="https://i.ibb.co/5vsMR1h/pokemoncard-02.png" alt="pokemoncard-02" />
+      </div>
+    </section>
+
+    <div id="game-container">
+      <div id="game-area" style="display: none">
+        <div id="scoreboard">
+          <div class="scoreboard-details">
+            <p>Computer: <span id="computer-score">0</span></p>
+          </div>
+          <div class="scoreboard-vs-sign">VS</div>
+
+          <div class="scoreboard-details">
+            <p>Player: <span id="player-score">0</span></p>
+          </div>
+        </div>
+        <div id="computer-card" style="display: none"></div>
+        <div class="scoreboard-round-compare">
+          <p id="round-counter"></p>
+          <p id="current-category"></p>
+        </div>
+
+        <div id="comparison-field">
+          <div id="comparison-field-cards">
+            <div id="selected-computer-card"></div>
+            <div id="selected-player-card"></div>
+          </div>
+          <div id="round-result"></div>
+        </div>
+
+        <div class="player-cards-container">
+          <span class="bold-large">Player</span>
+          <div id="player-cards"></div>
+          <button id="compare-cards" disabled>Play Card</button>
+        </div>
+      </div>
+    </div>
+    <div id="modal">
+      <div id="modal-content">
+        <h2>Game Over</h2>
+
+        <div class="pixel-block">
+          <div class="pixelized-heart"></div>
+        </div>
+
+        <h3 id="final-result"></h3>
+
+        <button id="close-modal">Close</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-disclamer">
+      <p>
+        Pokémon images, names, and logos are trademarks of Nintendo, Creatures
+        Inc., and GAME FREAK. All rights reserved. This project is a fan-made
+        creation and is not affiliated with or endorsed by Nintendo, Creatures
+        Inc., or GAME FREAK.
+      </p>
+    </div>
+  </footer>
+</body>
+
 </html>

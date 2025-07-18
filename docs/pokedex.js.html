@@ -1,4 +1,32 @@
-let pokemons = [];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pokedex.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pokedex.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let pokemons = [];
 let pokemonDataArray = [];
 const pokemonCardContainer = document.getElementById("pokemon-cards-container");
 const loader = document.querySelector(".first-loader-container");
@@ -39,7 +67,7 @@ function hideLoader() {
  * Loads Pokémon data and sets up the "Load More" button.
  * @async
  * @function
- * @returns {Promise<void>} Resolves when data is loaded.
+ * @returns {Promise&lt;void>} Resolves when data is loaded.
  */
 async function loadData() {
   await loadPokemonCards();
@@ -76,12 +104,12 @@ function displayVisible() {
  * @function
  * @param {number} offset - The offset for pagination.
  * @param {number} limit - The number of Pokémon to fetch.
- * @returns {Promise<Object>} The Pokémon list response object.
+ * @returns {Promise&lt;Object>} The Pokémon list response object.
  */
 async function getPokemonList(offset, limit) {
   try {
     let res = await fetch(
-      `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+      `https://pokeapi.co/api/v2/pokemon?offset=${offset}&amp;limit=${limit}`
     );
     if (!res.ok) {
       throw new Error(`HTTP Error! Status: ${res.status}`);
@@ -97,7 +125,7 @@ async function getPokemonList(offset, limit) {
  * @async
  * @function
  * @param {string|number} id - The Pokémon name or ID.
- * @returns {Promise<Object>} The Pokémon data object.
+ * @returns {Promise&lt;Object>} The Pokémon data object.
  */
 async function getAllPokemonData(id) {
   try {
@@ -116,7 +144,7 @@ async function getAllPokemonData(id) {
  * @async
  * @function
  * @param {string} url - The API URL for the species.
- * @returns {Promise<Object>} The species details object.
+ * @returns {Promise&lt;Object>} The species details object.
  */
 async function getPokemonSpeciesDetails(url) {
   try {
@@ -135,7 +163,7 @@ async function getPokemonSpeciesDetails(url) {
  * @async
  * @function
  * @param {string} url - The API URL for the ability.
- * @returns {Promise<Object>} The ability details object.
+ * @returns {Promise&lt;Object>} The ability details object.
  */
 async function getPokemonAbilityDetails(url) {
   try {
@@ -154,7 +182,7 @@ async function getPokemonAbilityDetails(url) {
  * @async
  * @function
  * @param {number} [currentOffset=offset] - The offset for pagination.
- * @returns {Promise<void>} Resolves when cards are loaded.
+ * @returns {Promise&lt;void>} Resolves when cards are loaded.
  */
 async function loadPokemonCards(currentOffset = offset) {
   const pokemonList = await getPokemonList(currentOffset, limit);
@@ -202,7 +230,7 @@ async function loadPokemonCards(currentOffset = offset) {
  * Creates and appends a Pokémon card to the container.
  * @param {Object} currentPokemon - The Pokémon data object.
  * @param {Object} speciesData - The species data object.
- * @param {Array<Object>} abilityDescriptions - Array of ability description objects.
+ * @param {Array&lt;Object>} abilityDescriptions - Array of ability description objects.
  * @returns {HTMLElement|undefined} The appended card element or undefined if template not found.
  */
 function createPokemonCard(currentPokemon, speciesData, abilityDescriptions) {
@@ -284,7 +312,7 @@ function loadMoreBtn() {
  * Loads more Pokémon cards by increasing the offset.
  * @async
  * @function
- * @returns {Promise<void>} Resolves when more cards are loaded.
+ * @returns {Promise&lt;void>} Resolves when more cards are loaded.
  */
 async function loadMoreData() {
   offset += limit;
@@ -296,7 +324,7 @@ async function loadMoreData() {
  * @async
  * @function
  * @param {number|string} pokemonID - The ID of the Pokémon to display.
- * @returns {Promise<void>} Resolves when modal is shown and filled.
+ * @returns {Promise&lt;void>} Resolves when modal is shown and filled.
  */
 async function showModalForPokemon(pokemonID) {
   let found = pokemonDataArray.find(
@@ -347,7 +375,7 @@ function showModalHeader(currentPokemon, speciesData) {
 
 /**
  * Displays Pokémon abilities and their descriptions in the modal.
- * @param {Array<Object>} abilityDescriptions - Array of ability description objects.
+ * @param {Array&lt;Object>} abilityDescriptions - Array of ability description objects.
  * @param {Object} moreData - Additional Pokémon data object.
  * @returns {void}
  */
@@ -359,7 +387,7 @@ function showModalAboutStats(abilityDescriptions, moreData) {
     const abilityName = abilityObj.ability.name;
     let description = "No description available.";
     if (
-      abilityDescriptions[index] &&
+      abilityDescriptions[index] &amp;&amp;
       abilityDescriptions[index].effect_entries
     ) {
       const entries = abilityDescriptions[index].effect_entries;
@@ -374,8 +402,8 @@ function showModalAboutStats(abilityDescriptions, moreData) {
     abilityDiv.classList.add("ability");
 
     abilityDiv.innerHTML = `
-      <p><em><strong>${abilityName}</strong></em></p>
-      <p><em>${description}</em></p>
+      &lt;p>&lt;em>&lt;strong>${abilityName}&lt;/strong>&lt;/em>&lt;/p>
+      &lt;p>&lt;em>${description}&lt;/em>&lt;/p>
     `;
     abilitiesContainer.appendChild(abilityDiv);
   });
@@ -424,7 +452,7 @@ function showModalCardTabs() {
   });
   tabButtons.forEach((tab) => tab.classList.remove("active-tab"));
 
-  if (tabButtons.length && infoBoxes.length) {
+  if (tabButtons.length &amp;&amp; infoBoxes.length) {
     tabButtons[0].classList.add("active-tab");
     let firstTarget = tabButtons[0].dataset.target;
     document.querySelector(`.${firstTarget}`).style.display = "flex";
@@ -441,7 +469,7 @@ function showModalCardTabs() {
 /**
  * Updates the active tab in the modal.
  * @param {HTMLElement} tab - The tab button to activate.
- * @param {NodeListOf<HTMLElement>} tabButtons - All tab buttons.
+ * @param {NodeListOf&lt;HTMLElement>} tabButtons - All tab buttons.
  * @returns {void}
  */
 function updateTabs(tab, tabButtons) {
@@ -452,7 +480,7 @@ function updateTabs(tab, tabButtons) {
 /**
  * Updates the visible tab content in the modal.
  * @param {HTMLElement} tab - The active tab button.
- * @param {NodeListOf<HTMLElement>} infoBoxes - All tab content boxes.
+ * @param {NodeListOf&lt;HTMLElement>} infoBoxes - All tab content boxes.
  * @returns {void}
  */
 function updateTabsContent(tab, infoBoxes) {
@@ -489,7 +517,7 @@ function nextPokemon(pokeID) {
  */
 function prevPokemon(pokeID) {
   let prevPokeID = pokeID - 1;
-  prevPokeID < 1
+  prevPokeID &lt; 1
     ? (prevArrow.style.visibility = "hidden")
     : (prevArrow.style.visibility = "visible");
 
@@ -524,7 +552,7 @@ function closeModal() {
  * @async
  * @function
  * @param {number} pokeID - The Pokémon's ID.
- * @returns {Promise<void>} Resolves when the evolution chain is shown.
+ * @returns {Promise&lt;void>} Resolves when the evolution chain is shown.
  */
 async function showEvolutionChain(pokeID) {
   const found = pokemonDataArray.find(
@@ -553,7 +581,7 @@ async function showEvolutionChain(pokeID) {
 /**
  * Recursively traverses the evolution chain and fills the result array.
  * @param {Object} chainNode - The current node in the evolution chain.
- * @param {Array<string>} resultArray - The array to store evolution species names.
+ * @param {Array&lt;string>} resultArray - The array to store evolution species names.
  * @returns {void}
  */
 function traverseEvolutionChain(chainNode, resultArray) {
@@ -570,14 +598,14 @@ function traverseEvolutionChain(chainNode, resultArray) {
  * Renders the evolution chain for a given list of Pokémon names.
  * @async
  * @function
- * @param {Array<string>} evolutionList - List of Pokémon names representing the evolution steps.
- * @returns {Promise<void>} Resolves when the evolution chain has been rendered.
+ * @param {Array&lt;string>} evolutionList - List of Pokémon names representing the evolution steps.
+ * @returns {Promise&lt;void>} Resolves when the evolution chain has been rendered.
  */
 async function renderEvolutionChain(evolutionList) {
   const container = document.querySelector(".evo-chain-info");
   container.innerHTML = "";
 
-  for (let i = 0; i < evolutionList.length; i++) {
+  for (let i = 0; i &lt; evolutionList.length; i++) {
     const name = evolutionList[i];
 
     const pokeData = await getAllPokemonData(name);
@@ -591,11 +619,34 @@ async function renderEvolutionChain(evolutionList) {
 
     container.appendChild(img);
 
-    if (i < evolutionList.length - 1) {
+    if (i &lt; evolutionList.length - 1) {
       const arrow = document.createElement("span");
-      arrow.innerHTML = `<i class="fa-solid fa-arrow-right"></i>`;
+      arrow.innerHTML = `&lt;i class="fa-solid fa-arrow-right">&lt;/i>`;
       arrow.classList.add("evo-arrow");
       container.appendChild(arrow);
     }
   }
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#closeModal">closeModal</a></li><li><a href="global.html#createPokemonCard">createPokemonCard</a></li><li><a href="global.html#displayComputerCard">displayComputerCard</a></li><li><a href="global.html#displayFullComputerCard">displayFullComputerCard</a></li><li><a href="global.html#displayHidden">displayHidden</a></li><li><a href="global.html#displayPlayerCards">displayPlayerCards</a></li><li><a href="global.html#displaySelectedPlayerCard">displaySelectedPlayerCard</a></li><li><a href="global.html#displayVisible">displayVisible</a></li><li><a href="global.html#filterPokemons">filterPokemons</a></li><li><a href="global.html#getAllPokemonData">getAllPokemonData</a></li><li><a href="global.html#getPokemon">getPokemon</a></li><li><a href="global.html#getPokemonAbilityDetails">getPokemonAbilityDetails</a></li><li><a href="global.html#getPokemonList">getPokemonList</a></li><li><a href="global.html#getPokemonSpeciesDetails">getPokemonSpeciesDetails</a></li><li><a href="global.html#hideLoader">hideLoader</a></li><li><a href="global.html#loadData">loadData</a></li><li><a href="global.html#loadMoreBtn">loadMoreBtn</a></li><li><a href="global.html#loadMoreData">loadMoreData</a></li><li><a href="global.html#loadPokemonCards">loadPokemonCards</a></li><li><a href="global.html#loadPokemonData">loadPokemonData</a></li><li><a href="global.html#menuToggle">menuToggle</a></li><li><a href="global.html#navLinks">navLinks</a></li><li><a href="global.html#nextPokemon">nextPokemon</a></li><li><a href="global.html#prevPokemon">prevPokemon</a></li><li><a href="global.html#renderEvolutionChain">renderEvolutionChain</a></li><li><a href="global.html#selectPlayerCard">selectPlayerCard</a></li><li><a href="global.html#showEvolutionChain">showEvolutionChain</a></li><li><a href="global.html#showFinalResult">showFinalResult</a></li><li><a href="global.html#showLoader">showLoader</a></li><li><a href="global.html#showModalAboutStats">showModalAboutStats</a></li><li><a href="global.html#showModalBaseStats">showModalBaseStats</a></li><li><a href="global.html#showModalCardTabs">showModalCardTabs</a></li><li><a href="global.html#showModalForPokemon">showModalForPokemon</a></li><li><a href="global.html#showModalHeader">showModalHeader</a></li><li><a href="global.html#traverseEvolutionChain">traverseEvolutionChain</a></li><li><a href="global.html#updateCurrentCategory">updateCurrentCategory</a></li><li><a href="global.html#updateRoundCounter">updateRoundCounter</a></li><li><a href="global.html#updateScore">updateScore</a></li><li><a href="global.html#updateTabs">updateTabs</a></li><li><a href="global.html#updateTabsContent">updateTabsContent</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Jul 18 2025 15:47:03 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
