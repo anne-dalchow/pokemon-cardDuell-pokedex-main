@@ -1,0 +1,340 @@
+.start-btn {
+    border: 2px solid var(--pokemon-yellow);
+    color: var(--pokemon-yellow);
+    padding: 10px 15px;
+    border-radius: var(--border-radius-10);
+}
+
+#compare-cards:enabled:hover {
+    background-color: var(--pokemon-blue);
+    transition: all 300ms ease;
+}
+
+#game-container {
+    width: 100%;
+    border-radius: var(--border-radius-15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#game-area {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 150px 0;
+    background-image: url(https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png);
+}
+
+.player-cards-container {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--pokemon-red-transparent);
+    border-radius: var(--border-radius-15);
+    padding-bottom: 50px;
+    border: 5px solid var(--pokemon-yellow);
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    width: 90%;
+    max-width: 1300px;
+}
+
+.player-cards-container .bold-large,
+#computer-card .bold-large {
+    font-size: clamp(1rem, 1vw, 1.2rem);
+    font-weight: 700;
+    background-color: var(--pokemon-yellow);
+    padding: 10px 20px 20px 20px;
+    border-radius: 0 0 30px 30px;
+    width: fit-content;
+}
+
+#player-cards {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 80%;
+}
+
+.play-card-container {
+    width: 100%;
+    background: #A2232D;
+    box-shadow: 0px -5px 8px #0000002f;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    bottom: 0;
+    left: 50%;
+    z-index: 999;
+}
+
+#computer-card {
+    padding: 10px;
+    border-radius: var(--border-radius-15);
+    background-color: var(--pokemon-blue-transparent);
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 90%;
+    max-width: 1300px;
+    padding: 0 20px 50px 20px;
+    border: 5px solid var(--pokemon-yellow);
+    box-shadow: 0px -10px 10px rgba(0, 0, 0, 0.5);
+}
+
+.card {
+    width: 250px;
+    margin: 0 auto;
+    border-radius: var(--border-radius-15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    background-color: white;
+}
+
+#player-cards .card {
+    cursor: pointer;
+    transform: scale(0.8);
+    margin: 0 -50px;
+
+    &:hover {
+        transform: scale(1);
+        transition: transform 300ms ease;
+        z-index: 100;
+    }
+}
+
+.card-header {
+    background-color: var(--pokemon-yellow);
+    border-radius: 15px 15px 0 0;
+    padding: 10px 20px;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 800;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.card-image {
+    background-color: rgb(116, 146, 221);
+    padding: 20px;
+}
+
+.card-image img {
+    width: 70%;
+}
+
+.card-content {
+    padding: 20px 20px 5px 20px;
+}
+
+.card-skill-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.skill-one,
+.skill-two,
+.skill-three,
+.skill-four {
+    background-color: rgb(217, 217, 217);
+    width: 45%;
+    height: 75px;
+    border-radius: 10px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.skill-name {
+    font-weight: 700;
+    font-size: clamp(1rem, 2vw, 1.1rem);
+}
+
+#player-cards .card.selected {
+    border: 5px solid var(--pokemon-yellow);
+    z-index: 200;
+    transform: translate(0, -100px);
+    transition: transform 0.5s ease;
+}
+
+#compare-cards {
+    width: 150px;
+}
+
+#scoreboard {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    width: 88%;
+    max-width: 1300px;
+    border-radius: 0 0 15px 15px;
+    background: linear-gradient(90deg,
+            rgba(57, 94, 179, 1) 0%,
+            rgba(228, 31, 37, 1) 100%);
+    box-shadow: 0px 5px 8px #0000002f;
+    padding: 20px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    color: white;
+    font-family: monospace, "Courier New", Courier;
+    font-size: clamp(1.2rem, 2vw, 2rem);
+}
+
+.scoreboard-details {
+    width: 40%;
+}
+
+.scoreboard-details p {
+    font-size: clamp(1.2rem, 2vw, 2rem);
+}
+
+.scoreboard-vs-sign {
+    width: 20%;
+}
+
+@keyframes slidein {
+    from {
+        transform: translateX(-5000px);
+    }
+
+    to {
+        transform: translateX(0px);
+    }
+}
+
+.scoreboard-round-compare {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    animation: slidein 3s 0.5s ease;
+    color: white;
+    background-color: #21212180;
+}
+
+.scoreboard-round-compare.sticky {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    position: static;
+    color: inherit;
+    background: #00000030;
+    border-radius: 15px;
+    margin-top: 8px;
+}
+
+#current-category,
+#round-counter {
+    font-family: monospace, "Courier New", Courier;
+    font-size: clamp(1.2rem, 2vw, 2rem);
+    text-transform: capitalize;
+    padding: 10px;
+}
+
+#comparison-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#comparison-field-cards {
+    display: flex;
+    gap: 20px;
+}
+
+#round-result {
+    font-weight: bold;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: #ffffff;
+}
+
+#modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#modal-content {
+    background: var(--black-color);
+    color: white;
+    padding: 20px;
+    border-radius: var(--border-radius-15);
+    text-align: center;
+    width: 70%;
+    height: 70%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#modal-content h2 {
+    font-size: clamp(2.2rem, 4vw, 4rem);
+}
+
+#modal-content h3 {
+    font-size: clamp(1.8rem, 3vw, 3rem);
+}
+
+#close-modal {
+    width: 150px;
+    border: none;
+}
+
+@media (max-width:630px) {
+
+    .player-cards-container,
+    #computer-card,
+    #scoreboard {
+        width: 100dvw;
+    }
+
+    .card {
+        width: 200px;
+    }
+
+    #player-cards {
+        width: 85%;
+    }
+
+    #player-cards .card:hover {
+        transform: scale(0.9);
+    }
+
+    #current-category,
+    #round-counter {
+        padding: 6px;
+    }
+}
