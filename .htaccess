@@ -1,8 +1,10 @@
-# .htaccess für Subdomain-Hosting (z.B. für GitHub Pages, Netlify oder klassischen Webspace)
-# Diese Datei sorgt für korrektes Routing von HTML5 Single Page Applications und schützt sensible Dateien.
+###############################################
+# .htaccess für Subdomain-Hosting
+# Routing für HTML5 SPA, Schutz & Caching
+###############################################
 
-# Weiterleitung auf index.html bei 404 (für SPA-Routing)
 RewriteEngine On
+# Weiterleitung auf index.html bei 404 (SPA-Routing)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.html [L]
@@ -13,7 +15,7 @@ RewriteRule ^ index.html [L]
   Deny from all
 </FilesMatch>
 
-# Caching für statische Assets (optional, kann angepasst werden)
+# Caching für statische Assets
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType image/jpg "access plus 1 year"
