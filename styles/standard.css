@@ -11,7 +11,6 @@
   --light-yellow: #fce12e;
   --white-color: #e6f5fa;
   --black-color: #212121;
-
   --border-radius-15: 15px;
   --border-radius-10: 10px;
 }
@@ -29,26 +28,29 @@ body {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
   color: white;
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 3vw, 1.5rem);
 }
 
 p {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
   line-height: 1.5;
 }
 
 a {
   color: var(--white-color);
   text-decoration: none;
+  font-size: clamp(0.9rem, 2vw, 1rem);
 }
+
 li {
   list-style: none;
 }
+
 .navbar {
   background-color: var(--black-color);
   height: 60px;
@@ -61,7 +63,6 @@ li {
 }
 
 .logo {
-  font-size: 1.5rem;
   font-weight: bold;
   color: white;
   display: flex;
@@ -69,11 +70,14 @@ li {
   align-items: center;
   gap: 8px;
 }
-.logo img{
+
+.logo img {
   width: 30px;
 }
-.logo p{
-  font-size: 1.5rem;
+
+.logo,
+.logo p {
+  font-size: clamp(1rem, 3vw, 1.5rem);
 }
 
 .nav-links {
@@ -95,6 +99,7 @@ li {
   border-radius: 5px;
   color: white;
 }
+
 nav a:last-child {
   background-color: #ffbb00;
   color: var(--black-color);
@@ -108,13 +113,12 @@ a:last-child:hover {
 
 #menu-toggle {
   display: none;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
   background: none;
   border: none;
   color: white;
   cursor: pointer;
 }
-
 
 footer {
   background-color: var(--black-color);
@@ -142,12 +146,12 @@ footer {
 }
 
 footer p {
-  font-size: 0.9rem;
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
 }
 
 button:disabled {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
   font-weight: 700;
   background-color: gray;
   color: black;
@@ -159,7 +163,7 @@ button:disabled {
 
 button:enabled {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
   font-weight: 700;
   background-color: var(--pokemon-yellow);
   filter: drop-shadow(1px 1px 2px rgb(46, 46, 46));
@@ -173,18 +177,19 @@ button:enabled {
 
 .bold {
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: clamp(1rem, 3vw, 1.3rem);
 }
 
 
-/* Responsive */
 @media (max-width: 768px) {
-  .logo{
+  .logo {
     padding-left: 16px;
   }
+
   .navbar {
     padding: 8px 0px;
   }
+
   #menu-toggle {
     display: block;
     padding-right: 16px;
@@ -202,6 +207,9 @@ button:enabled {
 
   .nav-links.active {
     display: flex;
+    position: absolute;
+    top: 60px;
+    left: 0;
   }
 
   .nav-links a {
@@ -209,6 +217,7 @@ button:enabled {
     width: 100%;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
   }
+
   .nav-links {
     gap: 0rem;
   }

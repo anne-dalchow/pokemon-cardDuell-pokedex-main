@@ -12,18 +12,20 @@ body {
   max-width: 1400px;
   margin: auto;
 }
+
 header {
   margin-top: 50px;
 }
+
 header img {
   width: 450px;
-    filter: drop-shadow(1px 2px 2px rgb(34, 34, 34));
+  filter: drop-shadow(1px 2px 2px rgb(34, 34, 34));
 }
 
 .search-container {
   position: relative;
   width: 500px;
-  margin: 24px;
+  margin: 24px 0;
   padding: 16px;
 }
 
@@ -44,9 +46,11 @@ header img {
   font-size: 14px;
   background-color: rgba(2, 0, 22, 0.7);
 }
+
 #search-input-pokemon:focus {
   background-color: white;
 }
+
 input::placeholder {
   color: rgb(192, 192, 192);
 }
@@ -58,6 +62,7 @@ input::placeholder {
   gap: 64px;
   margin: 64px 0px;
 }
+
 .first-loader-container,
 .loadmore-container {
   display: flex;
@@ -69,7 +74,6 @@ input::placeholder {
   margin-bottom: 50px;
 }
 
-/* -------------------- CARD ------------------------- */
 .card {
   background-color: var(--blue-light);
   color: white;
@@ -82,10 +86,12 @@ input::placeholder {
   filter: drop-shadow(2px 2px 4px rgb(31, 31, 31));
   cursor: pointer;
 }
+
 .card:hover {
   transform: scale(1.1);
   transition: transform 0.3s ease-in-out;
 }
+
 .pokemon-name-container {
   flex: 1;
   padding: 16px;
@@ -122,8 +128,6 @@ input::placeholder {
   align-items: center;
   gap: 24px;
 }
-
-/* ------------------------------ Modal ---------------------------------------- */
 
 .modal-container {
   position: fixed;
@@ -167,6 +171,7 @@ input::placeholder {
   overflow: hidden;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.6);
 }
+
 #close-modal {
   font-size: 32px;
   cursor: pointer;
@@ -178,12 +183,15 @@ input::placeholder {
   flex-flow: row wrap;
   padding: 16px;
 }
+
 .pokename-modal-container div:first-child {
   flex: 1;
 }
+
 .pokeimg-modal-container {
   height: 200px;
 }
+
 .pokeimg-modal-container img {
   width: 180px;
   padding: 8px 16px 16px 16px;
@@ -246,6 +254,7 @@ input::placeholder {
 .short-facts div {
   gap: 64px;
 }
+
 .short-facts div,
 .stats div {
   display: flex;
@@ -254,9 +263,11 @@ input::placeholder {
   align-items: center;
   width: 100%;
 }
+
 .stats div {
   gap: 24px;
 }
+
 .stats div p:first-child {
   width: 100px;
   text-align: left;
@@ -274,11 +285,13 @@ input::placeholder {
   text-align: left;
   width: 100%;
 }
+
 .abilities-container {
   display: flex;
   flex-flow: column wrap;
   gap: 16px;
 }
+
 .ability {
   text-align: left;
 }
@@ -286,12 +299,13 @@ input::placeholder {
 .tab-content.active {
   display: block;
 }
+
 .progress-wrapper {
   position: relative;
   width: 100%;
 }
 
-progress{
+progress {
   height: 16px;
   appearance: none;
   -webkit-appearance: none;
@@ -306,7 +320,7 @@ progress{
   position: absolute;
   left: 70%;
   transform: translateX(-50%);
-  top: 4px; /* leicht anpassen je nach Höhe */
+  top: 4px;
   color: black;
   font-size: 12px;
 }
@@ -334,10 +348,12 @@ progress::-moz-progress-bar {
   gap: 8px;
   padding: 10px 0;
 }
+
 .evo-img {
   width: 80px;
   height: auto;
 }
+
 .evo-arrow {
   font-size: 20px;
 }
@@ -346,40 +362,51 @@ progress::-moz-progress-bar {
   .search-container {
     width: 100%;
   }
+
   header img {
     max-width: 300px;
   }
+
   #pokemon-cards-container {
     gap: 32px;
     margin: 32px 0px;
   }
+
   .card {
     width: 175px;
   }
+
   .card:hover {
     transform: scale(1);
   }
+
   .pokemon-img-container img {
     width: 150px;
   }
+
   .modal {
     gap: 0px;
     padding: 8px;
   }
+
   .modal-card {
     width: 100%;
   }
+
   .fa-circle-chevron-right,
   .fa-circle-chevron-left {
     position: absolute;
     bottom: 16px;
   }
+
   .fa-circle-chevron-left {
     left: 16px;
   }
+
   .fa-circle-chevron-right {
     right: 16px;
   }
+
   .progressvalue {
     left: 70%;
   }

@@ -48,8 +48,6 @@
   background-image: url(/assets/icons/poison.svg);
 }
 
-/* -------------------------------------------------- */
-
 .type {
   background-size: 60%;
   background-repeat: no-repeat;
@@ -61,89 +59,90 @@
 
 .bug {
   background-image: url(/assets/icons/bug.svg);
-  background-color: rgb(106, 199, 70); /* green */
+  background-color: rgb(106, 199, 70);
 }
 
 .dark {
   background-image: url(/assets/icons/dark.svg);
-  background-color: rgba(40, 40, 40, 1); /* black */
+  background-color: rgba(40, 40, 40, 1);
 }
 
 .dragon {
   background-image: url(/assets/icons/dragon.svg);
-  background-color: rgb(44, 113, 202); /* blue */
+  background-color: rgb(44, 113, 202);
 }
 
 .electric {
   background-image: url(/assets/icons/electric.svg);
-  background-color: rgb(170, 189, 30); /* yellow */
+  background-color: rgb(170, 189, 30);
 }
 
 .fairy {
   background-image: url(/assets/icons/fairy.svg);
-  background-color: rgba(246, 156, 177, 1); /* pink */
+  background-color: rgba(246, 156, 177, 1);
 }
 
 .fighting {
   background-image: url(/assets/icons/fighting.svg);
-  background-color: rgba(236, 66, 37, 1); /* red */
+  background-color: rgba(236, 66, 37, 1);
 }
 
 .fire {
   background-image: url(/assets/icons/fire.svg);
-  background-color: rgba(236, 66, 37, 1); /* red */
+  background-color: rgba(236, 66, 37, 1);
 }
 
 .flying {
   background-image: url(/assets/icons/flying.svg);
-  background-color: #7b94d8; /* gray */
+  background-color: #7b94d8;
 }
 
 .ghost {
   background-image: url(/assets/icons/ghost.svg);
-  background-color: rgb(136, 64, 184); /* purple */
+  background-color: rgb(136, 64, 184);
 }
+
 .grass {
   background-image: url(/assets/icons/grass.svg);
-  background-color: rgb(95, 184, 59); /* green */
+  background-color: rgb(95, 184, 59);
 }
 
 .ground {
   background-image: url(/assets/icons/ground.svg);
-  background-color: #884d00; /* brown */
+  background-color: #884d00;
 }
 
 .ice {
   background-image: url(/assets/icons/ice.svg);
-  background-color: #4cadbe; /* white */
+  background-color: #4cadbe;
 }
 
 .normal {
   background-image: url(/assets/icons/normal.svg);
-  background-color: #4d4d4d; /* gray */
+  background-color: #4d4d4d;
 }
 
 .poison {
   background-image: url(/assets/icons/poison.svg);
-  background-color: rgb(136, 64, 184); /* purple */
+  background-color: rgb(136, 64, 184);
 }
 
 .psychic {
   background-image: url(/assets/icons/psychic.svg);
-  background-color: rgb(172, 55, 100); /* pink */
+  background-color: rgb(172, 55, 100);
 }
 
 .rock {
   background-image: url(/assets/icons/rock.svg);
-  background-color: #884d00; /* brown */
+  background-color: #884d00;
 }
 
 .steel {
   background-image: url(/assets/icons/steel.svg);
-  background-color: #dddddd; /* gray */
+  background-color: #dddddd;
 }
 
 .water {
   background-image: url(/assets/icons/water.svg);
-  background-color: rgb(44, 113, 202); /* blue */
+  background-color: rgb(44, 113, 202);
 }
