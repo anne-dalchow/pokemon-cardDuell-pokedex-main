@@ -7,6 +7,8 @@
   <title>Pokemon - Card Duell</title>
   <link rel="stylesheet" href="./styles/standard.css" />
   <link rel="stylesheet" href="./styles/style.css" />
+  <link rel="stylesheet" href="./styles/pixelheart.css" />
+  <link rel="stylesheet" href="./styles/game.css" />
   <!-- FontAwesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <script src="./scripts/togglenav.js" defer></script>
@@ -22,13 +24,11 @@
     </div>
     <button id="menu-toggle" aria-label="Menü öffnen">&#9776;</button>
     <div class="nav-links">
+      <a href="index.html">Home</a>
       <a href="pokedex.html">Pokédex</a>
-      <a href="index.html#instruction">Instruction</a>
       <a href="index.html#start-game">Start Game</a>
     </div>
   </nav>
-
-
 
   <main>
     <header class="hero">
@@ -44,12 +44,12 @@
         <div class="hero-text">
           <h1>Duell Card Game</h1>
           <p>
-            Put your Pokémon team to the test and face off <br />
-            against the computer in an epic card duel! <br />
+            Put your Pokémon team to the test and face off
+            against the computer in an epic card duel!
           </p>
           <p>
-            Compare your cards' stats and see if you have <br />
-            what it takes to become the ultimate champion. <br />
+            Compare your cards' stats and see if you have
+            what it takes to become the ultimate champion.
             Are you ready to prove your skills?
           </p>
           <div class="hero-links">
@@ -136,7 +136,7 @@
         <div class="player-cards-container">
           <span class="bold-large">Player</span>
           <div id="player-cards"></div>
-          <button id="compare-cards" disabled>Play Card</button>
+          <div class="play-card-container"><button id="compare-cards" disabled>Play Card</button></div>
         </div>
       </div>
     </div>
