@@ -1,12 +1,67 @@
+/**
+ * @fileoverview Main logic for the Pokémon Pokedex and Card Duel application.
+ *
+ * Handles data loading, card rendering, modal logic, evolution chains, and UI interactions.
+ * All core application logic is managed here and uses helpers from utils and modalUtils modules.
+ *
+ * @module pokedex
+ */
+import {
+  traverseEvolutionChain,
+  renderEvolutionChain,
+  findPokemonDataById,
+  findPokemonForEvolution,
+  logPokemonNotFound,
+  logEvolutionNotFound,
+  logTemplateError,
+  logEvolutionFetchError,
+  capitalize,
+  setDisplay,
+  hideAllTabContents,
+  deactivateAllTabs,
+  activateFirstTab,
+  handleTabClick,
+} from "./utils.js";
+import {
+  traverseEvolutionChain,
+  renderEvolutionChain,
+  findPokemonDataById,
+  findPokemonForEvolution,
+  logPokemonNotFound,
+  logEvolutionNotFound,
+  logTemplateError,
+  logEvolutionFetchError,
+  capitalize,
+  setDisplay,
+  hideAllTabContents,
+  deactivateAllTabs,
+  activateFirstTab,
+  handleTabClick,
+} from "./utils.js";
+import {
+  fillCardContent,
+  addCardClickHandler,
+  fillCardTypes,
+  createAbilityDiv,
+  setStatProgress,
+  closeModal,
+  updateModalHeaderColor,
+  setModalHeaderText,
+  setModalHeaderImage,
+} from "./modalUtils.js";
+
 let pokemons = [];
 let pokemonDataArray = [];
 const pokemonCardContainer = document.getElementById("pokemon-cards-container");
 const loader = document.querySelector(".first-loader-container");
 const modal = document.querySelector(".modal-container");
-
 let offset = 0;
 const limit = 20;
 
+/**
+ * Initializes the application on DOMContentLoaded.
+ * Sets up UI, loads data, and search input event.
+ */
 window.addEventListener("DOMContentLoaded", () => {
   displayHidden();
   showLoader();
@@ -14,7 +69,6 @@ window.addEventListener("DOMContentLoaded", () => {
     hideLoader();
     displayVisible();
   });
-
   const input = document.getElementById("search-input-pokemon");
   input.addEventListener("input", filterPokemons);
 });
@@ -44,7 +98,6 @@ function hideLoader() {
 async function loadData() {
   await loadPokemonCards();
   loadMoreBtn();
-
   setTimeout(() => {
     hideLoader();
     displayVisible();
@@ -56,18 +109,18 @@ async function loadData() {
  * @returns {void}
  */
 function displayHidden() {
-  document.querySelector(".loadMore-spinner").style.display = "none";
-  document.querySelector(".search-container").style.display = "none";
-  document.querySelector(".loadmore-container").style.display = "none";
+  setDisplay(".loadMore-spinner", "none");
+  setDisplay(".search-container", "none");
+  setDisplay(".loadmore-container", "none");
 }
 
 /**
- * Shows UI elements after data is loaded.
+ * Shows UI elements when data is visible.
  * @returns {void}
  */
 function displayVisible() {
-  document.querySelector(".search-container").style.display = "flex";
-  document.querySelector(".loadmore-container").style.display = "flex";
+  setDisplay(".search-container", "flex");
+  setDisplay(".loadmore-container", "flex");
 }
 
 /**
@@ -158,44 +211,62 @@ async function getPokemonAbilityDetails(url) {
  */
 async function loadPokemonCards(currentOffset = offset) {
   const pokemonList = await getPokemonList(currentOffset, limit);
-
   const newPokemonData = await Promise.all(
-    pokemonList.results.map(async (pokemon) => {
-      const singlePokemonData = await getAllPokemonData(pokemon.name);
-      const speciesData = await getPokemonSpeciesDetails(
-        singlePokemonData.species.url
-      );
-
-      const abilityDescriptions = [];
-      for (const ability of singlePokemonData.abilities) {
-        const description = await getPokemonAbilityDetails(ability.ability.url);
-        abilityDescriptions.push(description);
-      }
-
-      const types = singlePokemonData.types.map((type) => type.type.name);
-      const capitalizedName =
-        singlePokemonData.name.charAt(0).toUpperCase() +
-        singlePokemonData.name.slice(1);
-
-      const currentPokemon = {
-        id: singlePokemonData.id,
-        name: capitalizedName,
-        image: singlePokemonData.sprites.other.home.front_default,
-        types: types,
-      };
-
-      return { currentPokemon, speciesData, abilityDescriptions };
-    })
+    pokemonList.results.map(fetchSinglePokemonData)
   );
-
   pokemonDataArray.push(...newPokemonData);
+  newPokemonData.forEach(addPokemonToUI);
+}
 
-  newPokemonData.forEach(
-    ({ currentPokemon, speciesData, abilityDescriptions }) => {
-      pokemons.push(currentPokemon);
-      createPokemonCard(currentPokemon, speciesData, abilityDescriptions);
-    }
+/**
+ * Fetches all data for a single Pokémon and returns a structured object.
+ * @param {Object} pokemon - The Pokémon list entry.
+ * @returns {Promise<Object>} Structured Pokémon data.
+ */
+async function fetchSinglePokemonData(pokemon) {
+  const singlePokemonData = await getAllPokemonData(pokemon.name);
+  const speciesData = await getPokemonSpeciesDetails(
+    singlePokemonData.species.url
   );
+  const abilityDescriptions = await fetchAbilityDescriptions(
+    singlePokemonData.abilities
+  );
+  const currentPokemon = buildCurrentPokemon(singlePokemonData);
+  return { currentPokemon, speciesData, abilityDescriptions };
+}
+
+/**
+ * Builds a Pokémon object with selected properties.
+ * @param {Object} singlePokemonData - Raw Pokémon data from API.
+ * @returns {Object} Pokémon object with id, name, image, and types.
+ */
+function buildCurrentPokemon(singlePokemonData) {
+  return {
+    id: singlePokemonData.id,
+    name: capitalize(singlePokemonData.name),
+    image: singlePokemonData.sprites.other.home.front_default,
+    types: singlePokemonData.types.map((type) => type.type.name),
+  };
+}
+
+/**
+ * Fetches ability descriptions for a Pokémon.
+ * @param {Array} abilities - Array of ability objects.
+ * @returns {Promise<Array>} Array of ability description objects.
+ */
+async function fetchAbilityDescriptions(abilities) {
+  return Promise.all(
+    abilities.map((ability) => getPokemonAbilityDetails(ability.ability.url))
+  );
+}
+
+/**
+ * Adds a Pokémon card to the UI and pokemons array.
+ * @param {Object} data - Pokémon data object.
+ */
+function addPokemonToUI({ currentPokemon, speciesData, abilityDescriptions }) {
+  pokemons.push(currentPokemon);
+  createPokemonCard(currentPokemon, speciesData, abilityDescriptions);
 }
 
 /**
@@ -207,38 +278,11 @@ async function loadPokemonCards(currentOffset = offset) {
  */
 function createPokemonCard(currentPokemon, speciesData, abilityDescriptions) {
   const template = document.getElementById("pokemon-card-template");
-  if (!template) {
-    console.error("Pokemon Card Template not found!");
-    return;
-  }
+  if (!template) return logTemplateError();
   const cardTemplate = template.content.cloneNode(true);
-  const originalColor = speciesData.color.name;
-  const statsContainer = cardTemplate.querySelector(
-    ".pokemon-stats-container div"
-  );
-  const card = cardTemplate.querySelector(".card");
-  card.setAttribute("data-id", currentPokemon.id);
-  card.addEventListener("click", (event) => {
-    const pokemonID = event.currentTarget.getAttribute("data-id");
-    showModalForPokemon(pokemonID);
-  });
-
-  cardTemplate.querySelector(".pokemon-index").innerText = currentPokemon.id;
-  cardTemplate.querySelector(".pokemon-name").innerText = currentPokemon.name;
-  cardTemplate
-    .querySelector(".pokemon-img-container>img")
-    .setAttribute("src", currentPokemon.image);
-  cardTemplate
-    .querySelector(".pokemon-img-container")
-    .classList.add(`color-${originalColor}`);
-
-  statsContainer.innerHTML = "";
-
-  currentPokemon.types.forEach((type) => {
-    const icon = document.createElement("div");
-    icon.classList.add("type", type, originalColor);
-    statsContainer.appendChild(icon);
-  });
+  fillCardContent(cardTemplate, currentPokemon, speciesData);
+  addCardClickHandler(cardTemplate, currentPokemon.id, showModalForPokemon);
+  fillCardTypes(cardTemplate, currentPokemon.types, speciesData.color.name);
   return pokemonCardContainer.appendChild(cardTemplate);
 }
 
@@ -269,7 +313,6 @@ function filterPokemons(event) {
 function loadMoreBtn() {
   const button = document.getElementById("loadMore-btn");
   const loader2 = document.querySelector(".loadMore-spinner");
-
   button.addEventListener("click", () => {
     loader2.style.display = "flex";
     button.style.display = "none";
@@ -299,22 +342,38 @@ async function loadMoreData() {
  * @returns {Promise<void>} Resolves when modal is shown and filled.
  */
 async function showModalForPokemon(pokemonID) {
-  let found = pokemonDataArray.find(
-    ({ currentPokemon }) => currentPokemon.id == pokemonID
+  const found = findPokemonDataById(pokemonDataArray, pokemonID);
+  if (!found) return logPokemonNotFound();
+  const { currentPokemon, speciesData, abilityDescriptions } = found;
+  const moreData = await getAllPokemonData(currentPokemon.name);
+  fillModal(
+    currentPokemon,
+    speciesData,
+    abilityDescriptions,
+    moreData,
+    found.speciesData.id
   );
+}
 
-  if (!found) {
-    console.error("Pokemon not found!");
-    return;
-  }
-  let { currentPokemon, speciesData, abilityDescriptions } = found;
-  let moreData = await getAllPokemonData(currentPokemon.name);
-
+/**
+ * Fills the modal with all Pokémon details and sets up navigation.
+ * @param {Object} currentPokemon - The Pokémon data object.
+ * @param {Object} speciesData - The species data object.
+ * @param {Array<Object>} abilityDescriptions - Array of ability description objects.
+ * @param {Object} moreData - Additional Pokémon data object.
+ * @param {number} pokeID - The Pokémon's ID.
+ */
+function fillModal(
+  currentPokemon,
+  speciesData,
+  abilityDescriptions,
+  moreData,
+  pokeID
+) {
   showModalHeader(currentPokemon, speciesData);
   showModalAboutStats(abilityDescriptions, moreData);
   showModalBaseStats(moreData);
   modal.style.display = "flex";
-  let pokeID = found.speciesData.id;
   showModalCardTabs();
   showEvolutionChain(pokeID);
   nextPokemon(pokeID);
@@ -329,20 +388,9 @@ async function showModalForPokemon(pokemonID) {
  * @returns {void}
  */
 function showModalHeader(currentPokemon, speciesData) {
-  const originalColor = speciesData.color.name;
-  modal.querySelector(".pokemon-index").innerText = currentPokemon.id;
-  modal.querySelector(".pokemon-name").innerText = currentPokemon.name;
-  modal.querySelector(".pokeimg-modal-container img").src =
-    currentPokemon.image;
-
-  const pokeimgHeader = modal.querySelector(".pokeimg-modal-container");
-
-  pokeimgHeader.className = pokeimgHeader.className
-    .split(" ")
-    .filter((className) => !className.startsWith("color-"))
-    .join(" ");
-
-  pokeimgHeader.classList.add(`color-${originalColor}`);
+  setModalHeaderText(modal, currentPokemon);
+  setModalHeaderImage(modal, currentPokemon);
+  updateModalHeaderColor(modal, speciesData.color.name);
 }
 
 /**
@@ -354,30 +402,10 @@ function showModalHeader(currentPokemon, speciesData) {
 function showModalAboutStats(abilityDescriptions, moreData) {
   const abilitiesContainer = modal.querySelector(".abilities-container");
   abilitiesContainer.innerHTML = "";
-
   moreData.abilities.forEach((abilityObj, index) => {
-    const abilityName = abilityObj.ability.name;
-    let description = "No description available.";
-    if (
-      abilityDescriptions[index] &&
-      abilityDescriptions[index].effect_entries
-    ) {
-      const entries = abilityDescriptions[index].effect_entries;
-      const englishEntry = entries.find(function (entry) {
-        return entry.language.name === "en";
-      });
-      if (englishEntry) {
-        description = englishEntry.short_effect;
-      }
-    }
-    const abilityDiv = document.createElement("div");
-    abilityDiv.classList.add("ability");
-
-    abilityDiv.innerHTML = `
-      <p><em><strong>${abilityName}</strong></em></p>
-      <p><em>${description}</em></p>
-    `;
-    abilitiesContainer.appendChild(abilityDiv);
+    abilitiesContainer.appendChild(
+      createAbilityDiv(abilityObj, abilityDescriptions[index])
+    );
   });
 }
 
@@ -387,27 +415,17 @@ function showModalAboutStats(abilityDescriptions, moreData) {
  * @returns {void}
  */
 function showModalBaseStats(moreData) {
-  const { height, weight, stats } = moreData;
-
-  const updateStat = (className, value) => {
-    document.querySelector(`.${className} progress`).value = value;
-    document.querySelector(`.${className}-text`).innerText = value;
-  };
-
-  updateStat("height", height);
-  updateStat("weight", weight);
-
-  const statMap = [
+  setStatProgress("height", moreData.height);
+  setStatProgress("weight", moreData.weight);
+  [
     "hp",
     "attack",
     "defense",
     "special-attack",
     "special-defense",
     "speed",
-  ];
-
-  statMap.forEach((name, index) => {
-    updateStat(name, stats[index].base_stat);
+  ].forEach((name, i) => {
+    setStatProgress(name, moreData.stats[i].base_stat);
   });
 }
 
@@ -418,48 +436,14 @@ function showModalBaseStats(moreData) {
 function showModalCardTabs() {
   const tabButtons = document.querySelectorAll(".tab-button");
   const infoBoxes = document.querySelectorAll(".tab-content");
-
-  infoBoxes.forEach((box) => {
-    box.style.display = "none";
-  });
-  tabButtons.forEach((tab) => tab.classList.remove("active-tab"));
-
-  if (tabButtons.length && infoBoxes.length) {
-    tabButtons[0].classList.add("active-tab");
-    let firstTarget = tabButtons[0].dataset.target;
-    document.querySelector(`.${firstTarget}`).style.display = "flex";
-  }
-
-  tabButtons.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      updateTabs(tab, tabButtons);
-      updateTabsContent(tab, infoBoxes);
-    });
-  });
-}
-
-/**
- * Updates the active tab in the modal.
- * @param {HTMLElement} tab - The tab button to activate.
- * @param {NodeListOf<HTMLElement>} tabButtons - All tab buttons.
- * @returns {void}
- */
-function updateTabs(tab, tabButtons) {
-  tabButtons.forEach((t) => t.classList.remove("active-tab"));
-  tab.classList.add("active-tab");
-}
-
-/**
- * Updates the visible tab content in the modal.
- * @param {HTMLElement} tab - The active tab button.
- * @param {NodeListOf<HTMLElement>} infoBoxes - All tab content boxes.
- * @returns {void}
- */
-function updateTabsContent(tab, infoBoxes) {
-  infoBoxes.forEach((box) => (box.style.display = "none"));
-  const targetClass = tab.dataset.target;
-  const targetBox = document.querySelector(`.${targetClass}`);
-  if (targetBox) targetBox.style.display = "flex";
+  hideAllTabContents(infoBoxes);
+  deactivateAllTabs(tabButtons);
+  activateFirstTab(tabButtons, infoBoxes);
+  tabButtons.forEach((tab) =>
+    tab.addEventListener("click", () =>
+      handleTabClick(tab, tabButtons, infoBoxes)
+    )
+  );
 }
 
 const prevArrow = document.getElementById("prev-arrow");
@@ -504,22 +488,6 @@ function prevPokemon(pokeID) {
 }
 
 /**
- * Sets up the modal close button and its event listener.
- * @returns {void}
- */
-function closeModal() {
-  let closeBtn = document.getElementById("close-modal");
-  closeBtn.addEventListener("click", () => {
-    document.querySelector(".modal-container").style.display = "none";
-  });
-  document
-    .querySelector(".modal-container")
-    .addEventListener("click", (event) => {
-      event.stopPropagation();
-    });
-}
-
-/**
  * Loads and displays the evolution chain for a given Pokémon.
  * @async
  * @function
@@ -527,75 +495,37 @@ function closeModal() {
  * @returns {Promise<void>} Resolves when the evolution chain is shown.
  */
 async function showEvolutionChain(pokeID) {
-  const found = pokemonDataArray.find(
-    ({ currentPokemon }) => currentPokemon.id === pokeID
-  );
-  if (!found) {
-    console.error("Pokémon nicht gefunden für Evolution Chain!");
-    return;
-  }
-
-  const speciesData = found.speciesData;
-  const evoChainUrl = speciesData.evolution_chain.url;
-
+  const found = findPokemonForEvolution(pokemonDataArray, pokeID);
+  if (!found) return logEvolutionNotFound();
+  const evoChainUrl = found.speciesData.evolution_chain.url;
   try {
-    const response = await fetch(evoChainUrl);
-    const data = await response.json();
-    const evolutionList = [];
-
-    traverseEvolutionChain(data.chain, evolutionList);
-    renderEvolutionChain(evolutionList);
+    const data = await fetchEvolutionChainData(evoChainUrl);
+    const evolutionList = buildEvolutionList(data.chain);
+    renderEvolutionChain(evolutionList, getAllPokemonData);
   } catch (error) {
-    console.error("Fehler beim Laden der Evolution Chain:", error);
+    logEvolutionFetchError(error);
   }
 }
 
 /**
- * Recursively traverses the evolution chain and fills the result array.
- * @param {Object} chainNode - The current node in the evolution chain.
- * @param {Array<string>} resultArray - The array to store evolution species names.
- * @returns {void}
- */
-function traverseEvolutionChain(chainNode, resultArray) {
-  resultArray.push(chainNode.species.name);
-
-  if (chainNode.evolves_to.length > 0) {
-    for (const nextEvolution of chainNode.evolves_to) {
-      traverseEvolutionChain(nextEvolution, resultArray);
-    }
-  }
-}
-
-/**
- * Renders the evolution chain for a given list of Pokémon names.
+ * Fetches the evolution chain data from the API.
  * @async
  * @function
- * @param {Array<string>} evolutionList - List of Pokémon names representing the evolution steps.
- * @returns {Promise<void>} Resolves when the evolution chain has been rendered.
+ * @param {string} url - The API URL for the evolution chain.
+ * @returns {Promise<Object>} The evolution chain data object.
  */
-async function renderEvolutionChain(evolutionList) {
-  const container = document.querySelector(".evo-chain-info");
-  container.innerHTML = "";
+async function fetchEvolutionChainData(url) {
+  const response = await fetch(url);
+  return await response.json();
+}
 
-  for (let i = 0; i < evolutionList.length; i++) {
-    const name = evolutionList[i];
-
-    const pokeData = await getAllPokemonData(name);
-    const imgURL = pokeData.sprites.other["official-artwork"].front_default;
-
-    const img = document.createElement("img");
-    img.src = imgURL;
-    img.alt = name;
-    img.title = name;
-    img.classList.add("evo-img");
-
-    container.appendChild(img);
-
-    if (i < evolutionList.length - 1) {
-      const arrow = document.createElement("span");
-      arrow.innerHTML = `<i class="fa-solid fa-arrow-right"></i>`;
-      arrow.classList.add("evo-arrow");
-      container.appendChild(arrow);
-    }
-  }
+/**
+ * Builds an array of evolution species names from the chain object.
+ * @param {Object} chain - The evolution chain object.
+ * @returns {Array<string>} Array of species names in the evolution chain.
+ */
+function buildEvolutionList(chain) {
+  const result = [];
+  traverseEvolutionChain(chain, result);
+  return result;
 }

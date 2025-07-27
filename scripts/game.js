@@ -1,3 +1,41 @@
+/**
+ * @fileoverview Main game logic for the Pokémon Card Duel game.
+ *
+ * Handles game state, card drawing, player/computer turns, score keeping, and UI updates.
+ * Uses HTML templates for card rendering and manages all game interactions.
+ *
+ * @module game
+ */
+import {
+  playerCardTemplate,
+  computerCardHiddenTemplate,
+  computerCardTemplate,
+  selectedPlayerCardTemplate,
+} from "./htmlTemplate.js";
+
+document.addEventListener("DOMContentLoaded", function () {
+  const scoreboard = document.getElementById("scoreboard");
+  const roundCompare = document.querySelector(".scoreboard-round-compare");
+  function placeCompareInScoreboard() {
+    if (window.innerWidth <= 900) {
+      if (!scoreboard.contains(roundCompare)) {
+        scoreboard.appendChild(roundCompare);
+      }
+      roundCompare.classList.add("sticky");
+    } else {
+      if (scoreboard.contains(roundCompare)) {
+        scoreboard.parentNode.insertBefore(
+          roundCompare,
+          scoreboard.nextSibling
+        );
+      }
+      roundCompare.classList.remove("sticky");
+    }
+  }
+  window.addEventListener("resize", placeCompareInScoreboard);
+  placeCompareInScoreboard();
+});
+
 let playerCards = [];
 let computerCards = [];
 let currentPlayerCard;
@@ -18,16 +56,16 @@ document.getElementById("start-game").addEventListener("click", () => {
  * @param {number} id - The Pokémon ID.
  * @returns {Promise<Object|null>} The Pokémon data object or null if fetch fails.
  */
-function getPokemon(id) {
-  return fetch(`https://pokedex.mimo.dev/api/pokemon/${id}`)
-    .then((response) => {
-      if (!response.ok) throw new Error("Fehler beim Abrufen der Daten");
-      return response.json();
-    })
-    .catch((error) => {
-      console.error("Fehler:", error);
-      return null;
-    });
+
+async function getPokemon(id) {
+  try {
+    const response = await fetch(`https://pokedex.mimo.dev/api/pokemon/${id}`);
+    if (!response.ok) throw new Error("Fehler beim Abrufen der Daten");
+    return await response.json();
+  } catch (error) {
+    console.error("Fehler:", error);
+    return null;
+  }
 }
 
 /**
@@ -37,32 +75,33 @@ function getPokemon(id) {
 function loadPokemonData() {
   playerCards = [];
   computerCards = [];
-  let promises = [];
-  for (let i = 0; i < 6; i++) {
-    const id = Math.floor(Math.random() * 1000) + 1;
-    promises.push(
-      getPokemon(id).then((pokemon) => {
-        if (pokemon) {
-          playerCards.push(pokemon);
-        }
-      })
-    );
-  }
-  for (let i = 0; i < 6; i++) {
-    const id = Math.floor(Math.random() * 1000) + 1;
-    promises.push(
-      getPokemon(id).then((pokemon) => {
-        if (pokemon) {
-          computerCards.push(pokemon);
-        }
-      })
-    );
-  }
-  Promise.all(promises).then(() => {
-    displayPlayerCards();
-    displayComputerCard();
-  });
+  Promise.all([
+    ...fetchCards(6, playerCards),
+    ...fetchCards(6, computerCards),
+  ]).then(initGameUI);
+}
 
+/**
+ * Fetches n cards and adds them to the target array.
+ * @param {number} n - Number of cards to fetch.
+ * @param {Array} target - Target array to push cards into.
+ * @returns {Promise[]} Array of Promises for each card fetch.
+ */
+function fetchCards(n, target) {
+  return Array.from({ length: n }, async () => {
+    const id = Math.floor(Math.random() * 1000) + 1;
+    const p = await getPokemon(id);
+    return p && target.push(p);
+  });
+}
+
+/**
+ * Initializes the UI after loading the cards.
+ * @returns {void}
+ */
+function initGameUI() {
+  displayPlayerCards();
+  displayComputerCard();
   document.getElementById("start-game").style.display = "none";
   document.getElementById("game-area").style.display = "flex";
 }
@@ -76,21 +115,7 @@ function displayPlayerCards() {
   playerCardsDiv.innerHTML = "";
 
   playerCards.forEach((card, index) => {
-    playerCardsDiv.innerHTML += `
-                      <div class="card" onclick="selectPlayerCard(${index})">
-                        <div class="card-header">${card.name}</div>
-                        <div class="card-image"><img src="${card.sprites.other.home.front_default}" alt="${card.name}"></div>
-                        <div class="card-content">
-                            <p>Description of the character goes here. </p>
-                            </div>
-                            <div class="card-skill-container">
-                                <div class="skill-one"><p class="skill-name">Attack</p><p>${card.stats[1].base_stat}</p></div>
-                                <div class="skill-two"><p class="skill-name">Defense</p><p>${card.stats[2].base_stat}</p></div>
-                                <div class="skill-three"><p class="skill-name">Speed</p><p>${card.stats[0].base_stat}</p></div>
-                                <div class="skill-four"><p class="skill-name">HP</p><p>${card.stats[3].base_stat}</p></div>
-                            </div>
-                        </div>
-                `;
+    playerCardsDiv.innerHTML += playerCardTemplate(card, index);
   });
 }
 
@@ -101,21 +126,8 @@ function displayPlayerCards() {
 function displayComputerCard() {
   const randomIndex = Math.floor(Math.random() * computerCards.length);
   currentComputerCard = computerCards[randomIndex];
-  document.getElementById("computer-card").innerHTML = `
-      <span class="bold-large">Computer</span> <br>
-      <div class="card">
-          <div class="card-header">??????????</div>
-          <div class="card-image">
-                <img src="https://i.ibb.co/hy7mg2D/fragezeichen-03.png" alt="fragezeichen-03" alt="question mark">
-          </div>
-          <div class="card-skill-container">
-              <div class="skill-one"><p class="skill-name">Attack</p><p>?</p></div>
-              <div class="skill-two"><p class="skill-name">Defense</p><p>?</p></div>
-              <div class="skill-three"><p class="skill-name">Speed</p><p>?</p></div>
-              <div class="skill-four"><p class="skill-name">HP</p><p>?</p></div>
-          </div>
-      </div>
-  `;
+  document.getElementById("computer-card").innerHTML =
+    computerCardHiddenTemplate();
   computerCards.splice(randomIndex, 1);
   document.getElementById("computer-card").style.display = "flex";
   currentCategory = updateCurrentCategory();
@@ -126,7 +138,8 @@ function displayComputerCard() {
  * @param {number} index - Index of the selected player card.
  * @returns {void}
  */
-function selectPlayerCard(index) {
+
+window.handleSelectPlayerCard = function (index) {
   currentPlayerCard = playerCards[index];
   document
     .querySelectorAll("#player-cards .card")
@@ -135,25 +148,15 @@ function selectPlayerCard(index) {
     .querySelectorAll("#player-cards .card")
     [index].classList.add("selected");
   document.getElementById("compare-cards").disabled = false;
-}
+};
 
 /**
  * Displays the selected player card in the UI.
  * @returns {void}
  */
 function displaySelectedPlayerCard() {
-  document.getElementById("selected-player-card").innerHTML = `
-            <div class="card">
-                <div class="card-header">${currentPlayerCard.name}</div>
-                <div class="card-image"><img src="${currentPlayerCard.sprites.other.home.front_default}" alt="${currentPlayerCard.name}"></div>
-                <div class="card-skill-container">
-                    <div class="skill-one"><p class="skill-name">Attack</p><p>${currentPlayerCard.stats[1].base_stat}</p></div>
-                    <div class="skill-two"><p class="skill-name">Defense</p><p>${currentPlayerCard.stats[2].base_stat}</p></div>
-                    <div class="skill-three"><p class="skill-name">Speed</p><p>${currentPlayerCard.stats[0].base_stat}</p></div>
-                    <div class="skill-four"><p class="skill-name">HP</p><p>${currentPlayerCard.stats[3].base_stat}</p></div>
-                </div>
-            </div>
-        `;
+  document.getElementById("selected-player-card").innerHTML =
+    selectedPlayerCardTemplate(currentPlayerCard);
 }
 
 /**
@@ -191,10 +194,8 @@ function updateScore(winner) {
     computerScore++;
   }
   turnsRemaining--;
-
   document.getElementById("player-score").innerText = playerScore;
   document.getElementById("computer-score").innerText = computerScore;
-
   if (turnsRemaining === 0) {
     const finalResult =
       playerScore > computerScore
@@ -225,79 +226,60 @@ function showFinalResult(message) {
  * @returns {void}
  */
 function displayFullComputerCard() {
-  document.getElementById("selected-computer-card").innerHTML = `
-      <div class="card">
-          <div class="card-header">${currentComputerCard.name}</div>
-          <div class="card-image"><img src="${currentComputerCard.sprites.other.home.front_default}" alt="${currentComputerCard.name}"></div>
-          <div class="card-skill-container">
-              <div class="skill-one"><p class="skill-name">Attack</p><p>${currentComputerCard.stats[1].base_stat}</p></div>
-              <div class="skill-two"><p class="skill-name">Defense</p><p>${currentComputerCard.stats[2].base_stat}</p></div>
-              <div class="skill-three"><p class="skill-name">Speed</p><p>${currentComputerCard.stats[0].base_stat}</p></div>
-              <div class="skill-four"><p class="skill-name">HP</p><p>${currentComputerCard.stats[3].base_stat}</p></div>
-          </div>
-      </div>
-  `;
+  document.getElementById("selected-computer-card").innerHTML =
+    computerCardTemplate(currentComputerCard);
 }
 
-document.getElementById("compare-cards").addEventListener("click", () => {
-  if (!currentPlayerCard) {
-    alert("Please choose a card!");
-    return;
-  }
-  let playerValue, computerValue;
+/**
+ * Compares the selected cards and updates the UI and score.
+ * @returns {void}
+ */
+function handleCompareCards() {
+  if (!currentPlayerCard) return alert("Please choose a card!");
   document.getElementById("comparison-field").style.display = "flex";
-
-  switch (currentCategory) {
-    case "attack":
-      playerValue = currentPlayerCard.stats[1].base_stat;
-      computerValue = currentComputerCard.stats[1].base_stat;
-      break;
-    case "defense":
-      playerValue = currentPlayerCard.stats[2].base_stat;
-      computerValue = currentComputerCard.stats[2].base_stat;
-      break;
-    case "speed":
-      playerValue = currentPlayerCard.stats[0].base_stat;
-      computerValue = currentComputerCard.stats[0].base_stat;
-      break;
-    case "hp":
-      playerValue = currentPlayerCard.stats[3].base_stat;
-      computerValue = currentComputerCard.stats[3].base_stat;
-      break;
-  }
-
-  let winner;
-  if (playerValue > computerValue) {
-    winner = "Player";
-  } else if (playerValue < computerValue) {
-    winner = "Computer";
-  } else {
-    winner = "Draw";
-  }
-
+  const statMap = { attack: 1, defense: 2, speed: 0, hp: 3 };
+  const idx = statMap[currentCategory];
+  const playerValue = currentPlayerCard.stats[idx].base_stat;
+  const computerValue = currentComputerCard.stats[idx].base_stat;
+  const winner =
+    playerValue > computerValue
+      ? "Player"
+      : playerValue < computerValue
+      ? "Computer"
+      : "Draw";
   document.getElementById("round-result").textContent = `${winner} win`;
   updateScore(winner);
-
   displayFullComputerCard();
   displaySelectedPlayerCard();
+  setTimeout(resetAfterCompare, 3000);
+}
 
-  setTimeout(() => {
-    document.getElementById("comparison-field").style.display = "none";
-    if (computerCards.length > 0) {
-      displayComputerCard(); 
-    } else {
-      console.log("No more computer cards left!");
-    }
-  }, 3000);
+/**
+ * Resets the UI and cards after comparison.
+ * @returns {void}
+ */
+function resetAfterCompare() {
+  document.getElementById("comparison-field").style.display = "none";
+  if (computerCards.length > 0) displayComputerCard();
   const index = playerCards.indexOf(currentPlayerCard);
-  if (index > -1) {
-    playerCards.splice(index, 1); 
-  }
-
+  if (index > -1) playerCards.splice(index, 1);
   currentPlayerCard = null;
   document.getElementById("player-cards").innerHTML = "";
   displayPlayerCards();
   document.getElementById("compare-cards").disabled = true;
-});
+}
 
-Modals
+document
+  .getElementById("compare-cards")
+  .addEventListener("click", handleCompareCards);
+
+document.getElementById("close-modal").addEventListener("click", () => {
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("start-game").style.display = "flex";
+  document.getElementById("game-area").style.display = "none";
+  playerScore = 0;
+  computerScore = 0;
+  turnsRemaining = totalRounds;
+  document.getElementById("player-score").innerText = playerScore;
+  document.getElementById("computer-score").innerText = computerScore;
+});
