@@ -7,8 +7,6 @@
  * @module pokedex
  */
 import {
-  traverseEvolutionChain,
-  renderEvolutionChain,
   findPokemonDataById,
   findPokemonForEvolution,
   logPokemonNotFound,
@@ -21,22 +19,8 @@ import {
   deactivateAllTabs,
   activateFirstTab,
   handleTabClick,
-} from "./utils.js";
-import {
   traverseEvolutionChain,
   renderEvolutionChain,
-  findPokemonDataById,
-  findPokemonForEvolution,
-  logPokemonNotFound,
-  logEvolutionNotFound,
-  logTemplateError,
-  logEvolutionFetchError,
-  capitalize,
-  setDisplay,
-  hideAllTabContents,
-  deactivateAllTabs,
-  activateFirstTab,
-  handleTabClick,
 } from "./utils.js";
 import {
   fillCardContent,
