@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: htmlTemplate.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: htmlTemplate.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Creates the HTML for a player card.
+ * @param {Object} card - The Pokémon object.
+ * @param {number} index - Card index.
+ * @returns {string} HTML string
+ */
+export function playerCardTemplate(card, index) {
+  /**
+   * @fileoverview HTML template functions for rendering Pokémon cards in the Card Duel game.
+   *
+   * Provides template generators for player cards, computer cards (hidden/revealed), and selected player cards.
+   *
+   * @module htmlTemplate
+   */
+  return `
+    &lt;div class="card" onclick="handleSelectPlayerCard(${index})">
+      &lt;div class="card-header">${card.name}&lt;/div>
+      &lt;div class="card-image">&lt;img src="${card.sprites.other.home.front_default}" alt="${card.name}">&lt;/div>
+      &lt;div class="card-content">&lt;p>Description of the character goes here.&lt;/p>&lt;/div>
+      &lt;div class="card-skill-container">
+        &lt;div class="skill-one">&lt;p class="skill-name">Attack&lt;/p>&lt;p>${card.stats[1].base_stat}&lt;/p>&lt;/div>
+        &lt;div class="skill-two">&lt;p class="skill-name">Defense&lt;/p>&lt;p>${card.stats[2].base_stat}&lt;/p>&lt;/div>
+        &lt;div class="skill-three">&lt;p class="skill-name">Speed&lt;/p>&lt;p>${card.stats[0].base_stat}&lt;/p>&lt;/div>
+        &lt;div class="skill-four">&lt;p class="skill-name">HP&lt;/p>&lt;p>${card.stats[3].base_stat}&lt;/p>&lt;/div>
+      &lt;/div>
+    &lt;/div>
+  `;
+}
+
+/**
+ * Creates the HTML for the hidden computer card.
+ * @returns {string} HTML string
+ */
+export function computerCardHiddenTemplate() {
+  return `
+    &lt;span class="bold-large">Computer&lt;/span> &lt;br>
+    &lt;div class="card">
+      &lt;div class="card-header">??????????&lt;/div>
+      &lt;div class="card-image">
+        &lt;img src="https://i.ibb.co/hy7mg2D/fragezeichen-03.png" alt="fragezeichen-03" alt="question mark">
+      &lt;/div>
+      &lt;div class="card-skill-container">
+        &lt;div class="skill-one">&lt;p class="skill-name">Attack&lt;/p>&lt;p>?&lt;/p>&lt;/div>
+        &lt;div class="skill-two">&lt;p class="skill-name">Defense&lt;/p>&lt;p>?&lt;/p>&lt;/div>
+        &lt;div class="skill-three">&lt;p class="skill-name">Speed&lt;/p>&lt;p>?&lt;/p>&lt;/div>
+        &lt;div class="skill-four">&lt;p class="skill-name">HP&lt;/p>&lt;p>?&lt;/p>&lt;/div>
+      &lt;/div>
+    &lt;/div>
+  `;
+}
+
+/**
+ * Creates the HTML for the revealed computer card.
+ * @param {Object} card - The Pokémon object.
+ * @returns {string} HTML string
+ */
+export function computerCardTemplate(card) {
+  return `
+    &lt;div class="card">
+      &lt;div class="card-header">${card.name}&lt;/div>
+      &lt;div class="card-image">&lt;img src="${card.sprites.other.home.front_default}" alt="${card.name}">&lt;/div>
+      &lt;div class="card-skill-container">
+        &lt;div class="skill-one">&lt;p class="skill-name">Attack&lt;/p>&lt;p>${card.stats[1].base_stat}&lt;/p>&lt;/div>
+        &lt;div class="skill-two">&lt;p class="skill-name">Defense&lt;/p>&lt;p>${card.stats[2].base_stat}&lt;/p>&lt;/div>
+        &lt;div class="skill-three">&lt;p class="skill-name">Speed&lt;/p>&lt;p>${card.stats[0].base_stat}&lt;/p>&lt;/div>
+        &lt;div class="skill-four">&lt;p class="skill-name">HP&lt;/p>&lt;p>${card.stats[3].base_stat}&lt;/p>&lt;/div>
+      &lt;/div>
+    &lt;/div>
+  `;
+}
+
+/**
+ * Creates the HTML for the selected player card.
+ * @param {Object} card - The Pokémon object.
+ * @returns {string} HTML string
+ */
+export function selectedPlayerCardTemplate(card) {
+  return `
+    &lt;div class="card">
+      &lt;div class="card-header">${card.name}&lt;/div>
+      &lt;div class="card-image">&lt;img src="${card.sprites.other.home.front_default}" alt="${card.name}">&lt;/div>
+      &lt;div class="card-skill-container">
+        &lt;div class="skill-one">&lt;p class="skill-name">Attack&lt;/p>&lt;p>${card.stats[1].base_stat}&lt;/p>&lt;/div>
+        &lt;div class="skill-two">&lt;p class="skill-name">Defense&lt;/p>&lt;p>${card.stats[2].base_stat}&lt;/p>&lt;/div>
+        &lt;div class="skill-three">&lt;p class="skill-name">Speed&lt;/p>&lt;p>${card.stats[0].base_stat}&lt;/p>&lt;/div>
+        &lt;div class="skill-four">&lt;p class="skill-name">HP&lt;/p>&lt;p>${card.stats[3].base_stat}&lt;/p>&lt;/div>
+      &lt;/div>
+    &lt;/div>
+  `;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-game.html">game</a></li><li><a href="module-htmlTemplate.html">htmlTemplate</a></li><li><a href="module-modalUtils.html">modalUtils</a></li><li><a href="module-utils.html">utils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#menuToggle">menuToggle</a></li><li><a href="global.html#navLinks">navLinks</a></li><li><a href="global.html#playerCardTemplate">playerCardTemplate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Jul 27 2025 23:02:03 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
