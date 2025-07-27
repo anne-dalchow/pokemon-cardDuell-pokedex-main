@@ -1,190 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pokemon - Card Duell</title>
-    <link rel="stylesheet" href="./styles/spinner.css" />
-    <link rel="stylesheet" href="./styles/standard.css" />
-    <link rel="stylesheet" href="./styles/color.css" />
-    <link rel="stylesheet" href="./styles/stylePokedex.css" />
-    <!-- FontAwesome CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <script src="./scripts/togglenav.js" defer></script>
-    <script src="./scripts/pokedex.js" defer></script>
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="logo">
-        <img src="./assets/Pokebola-pokeball-png-0.png" alt="Pokeball Logo">
-        <p>Pokémon</p>
-      </div>
-      <button id="menu-toggle" aria-label="Menü öffnen">&#9776;</button>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="#">Pokédex</a>
-        <a href="index.html#start-game">Start Game</a>
-      </div>
-    </nav>
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokemon - Card Duell</title>
+  <link rel="stylesheet" href="./styles/spinner.css" />
+  <link rel="stylesheet" href="./styles/standard.css" />
+  <link rel="stylesheet" href="./styles/color.css" />
+  <link rel="stylesheet" href="./styles/stylePokedex.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="./scripts/togglenav.js" defer></script>
+  <script src="scripts/pokedex.js" type="module"></script>
+</head>
 
-    <main class="pokedex-wrapper">
-      <header>
-        <img
-        src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg"
-        alt="Pokemon Logo"
-      />
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="./assets/Pokebola-pokeball-png-0.png" alt="Pokeball Logo">
+      <p>Pokémon</p>
+    </div>
+    <button id="menu-toggle" aria-label="Menü öffnen">&#9776;</button>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#">Pokédex</a>
+      <a href="index.html#start-game">Start Game</a>
+    </div>
+  </nav>
+
+  <main class="pokedex-wrapper">
+    <header>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg"
+        alt="Pokemon Logo" />
       <h1>Pokédex</h1>
-      </header>
-        <div class="search-container">
-          <i class="fa fa-search"></i>
-          <input
-            type="text"
-            name="search-pokemon"
-            id="search-input-pokemon"
-            placeholder="Search your Pokemon..."
-          />
-        </div>
-     
+    </header>
 
-      <section id="pokemon-cards-container">
-        <div class="first-loader-container">
-          <span class="loader"></span>
-          <span>Loading Pokemons ...</span>
+    <div class="search-container">
+      <i class="fa fa-search"></i>
+      <input type="text" name="search-pokemon" id="search-input-pokemon" placeholder="Search your Pokemon..." />
+    </div>
+
+    <section id="pokemon-cards-container">
+      <div class="first-loader-container">
+        <span class="loader"></span>
+        <span>Loading Pokemons ...</span>
+      </div>
+      <template id="pokemon-card-template">
+        <div class="card">
+          <div class="pokemon-name-container">
+            <span>#</span>
+            <span class="pokemon-index"></span>
+            <span class="pokemon-name"></span>
+          </div>
+          <div class="pokemon-img-container">
+            <img src="https://placehold.co/200x200" alt="" />
+          </div>
+          <div class="pokemon-stats-container">
+            <div></div>
+          </div>
         </div>
-        <!-- Pokemon Card Template -->
-        <template id="pokemon-card-template">
-          <div class="card">
-            <div class="pokemon-name-container">
+      </template>
+    </section>
+
+    <div class="loadmore-container">
+      <button id="loadMore-btn">Load More</button>
+      <span class="loadMore-spinner"></span>
+    </div>
+
+    <div class="modal-container">
+      <div class="modal">
+        <i class="fa-solid fa-circle-chevron-left" id="prev-arrow"></i>
+        <div class="modal-card">
+          <div class="pokename-modal-container">
+            <div>
               <span>#</span>
               <span class="pokemon-index"></span>
               <span class="pokemon-name"></span>
             </div>
-            <div class="pokemon-img-container">
-              <img src="https://placehold.co/200x200" alt="" />
-            </div>
-            <div class="pokemon-stats-container">
-              <div></div>
-            </div>
+            <i class="fa-solid fa-circle-xmark" id="close-modal"></i>
           </div>
-        </template>
-      </section>
-      <div class="loadmore-container">
-        <button id="loadMore-btn">Load More</button>
-        <span class="loadMore-spinner"></span>
-      </div>
+          <div class="pokeimg-modal-container">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png"
+              alt="" />
+          </div>
 
-      <!-- Modal -->
-      <div class="modal-container">
-       
-        <div class="modal">
-          <i class="fa-solid fa-circle-chevron-left" id="prev-arrow"></i>
-          <div class="modal-card">
-            <div class="pokename-modal-container">
-              <div>
-                <span>#</span>
-                <span class="pokemon-index"></span>
-                <span class="pokemon-name"></span>
-              </div>
-              <i class="fa-solid fa-circle-xmark" id="close-modal"></i>
-            </div>
-            <div class="pokeimg-modal-container">
-              <img
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png"
-                alt=""
-              />
+          <div class="pokemon-info-container">
+            <div class="search-tabs">
+              <p class="tab tab-button active-tab" data-target="about-info">
+                About
+              </p>
+              <p class="tab tab-button" data-target="stats-info">
+                Base Stats
+              </p>
+              <p class="tab tab-button" data-target="evo-chain-info">
+                Evolution
+              </p>
             </div>
 
-            <div class="pokemon-info-container">
-              <div class="search-tabs">
-                <p class="tab tab-button active-tab" data-target="about-info">
-                  About
-                </p>
-                <p class="tab tab-button" data-target="stats-info">
-                  Base Stats
-                </p>
-                <p class="tab tab-button" data-target="evo-chain-info">
-                  Evolution
-                </p>
+            <div class="tab-content about-info">
+              <div class="ability-headline">
+                <p>Ability</p>
+                <hr />
               </div>
-
-              <div class="tab-content about-info">
-                <div class="ability-headline">
-                  <p>Ability</p>
-                  <hr />
+              <div class="abilities-container"></div>
+            </div>
+            <div class="tab-content stats-info">
+              <div class="stats">
+                <div class="height progress-wrapper">
+                  <p>Height:</p>
+                  <progress value="32" max="255"></progress>
+                  <span class="height-text progressvalue"></span>
                 </div>
-                <div class="abilities-container"></div>
-              </div>
-              <div class="tab-content stats-info">
-                <div class="stats">
-                  <div class="height progress-wrapper">
-                    <p>Height:</p>
-                    <progress value="32" max="255"></progress>
-                    <span class="height-text progressvalue"></span>
-                  </div>
-                  <div class="weight progress-wrapper">
-                    <p>Weight:</p>
-                    <progress value="32"  max="2205"></progress>
-                    <span class="weight-text progressvalue"></span>
-                  </div>
-                  <div class="hp progress-wrapper">
-                    <p>HP:</p>
-                    <progress value="32"  max="255"></progress>
-                    <span class="hp-text progressvalue"></span>
-                  </div>
+                <div class="weight progress-wrapper">
+                  <p>Weight:</p>
+                  <progress value="32" max="2205"></progress>
+                  <span class="weight-text progressvalue"></span>
+                </div>
+                <div class="hp progress-wrapper">
+                  <p>HP:</p>
+                  <progress value="32" max="255"></progress>
+                  <span class="hp-text progressvalue"></span>
+                </div>
 
-                  <div class="attack progress-wrapper">
-                    <p>Attack:</p>
-                    <progress value="32"  max="190"></progress>
-                    <span class="attack-text progressvalue"></span>
-                  </div>
+                <div class="attack progress-wrapper">
+                  <p>Attack:</p>
+                  <progress value="32" max="190"></progress>
+                  <span class="attack-text progressvalue"></span>
+                </div>
 
-                  <div class="defense progress-wrapper">
-                    <p>Defense:</p>
-                    <progress value="32" max="230"></progress>
-                    <span class="defense-text progressvalue"></span>
-                  </div>
-                  <div class="special-attack progress-wrapper">
-                    <p>Sp. Attack:</p>
-                    <progress value="32" max="194"></progress>
-                    <span class="special-attack-text progressvalue"></span>
-                  </div>
-                  <div class="special-defense progress-wrapper">
-                    <p>Sp. Defense:</p>
-                    <progress value="32" max="230"></progress>
-                    <span class="special-defense-text progressvalue"></span>
-                  </div>
-                  <div class="speed progress-wrapper">
-                    <p>Speed:</p>
-                    <progress value="32"  max="180"></progress>
-                    <span class="speed-text progressvalue"></span>
-                  </div>
+                <div class="defense progress-wrapper">
+                  <p>Defense:</p>
+                  <progress value="32" max="230"></progress>
+                  <span class="defense-text progressvalue"></span>
+                </div>
+                <div class="special-attack progress-wrapper">
+                  <p>Sp. Attack:</p>
+                  <progress value="32" max="194"></progress>
+                  <span class="special-attack-text progressvalue"></span>
+                </div>
+                <div class="special-defense progress-wrapper">
+                  <p>Sp. Defense:</p>
+                  <progress value="32" max="230"></progress>
+                  <span class="special-defense-text progressvalue"></span>
+                </div>
+                <div class="speed progress-wrapper">
+                  <p>Speed:</p>
+                  <progress value="32" max="180"></progress>
+                  <span class="speed-text progressvalue"></span>
                 </div>
               </div>
+            </div>
 
-              <div class="tab-content evo-chain-info">
-              </div>
+            <div class="tab-content evo-chain-info">
             </div>
           </div>
-          <i class="fa-solid fa-circle-chevron-right" id="next-arrow"></i>
         </div>
-
-      </div>
-    </main>
-
-    <footer>
-      <div class="footer-disclamer">
-        <p>
-          Pokémon images, names, and logos are trademarks of Nintendo, Creatures
-          Inc., and GAME FREAK. All rights reserved. This project is a fan-made
-          creation and is not affiliated with or endorsed by Nintendo, Creatures
-          Inc., or GAME FREAK.
-        </p>
+        <i class="fa-solid fa-circle-chevron-right" id="next-arrow"></i>
       </div>
 
-    </footer>
-  </body>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-disclamer">
+      <p>
+        Pokémon images, names, and logos are trademarks of Nintendo, Creatures
+        Inc., and GAME FREAK. All rights reserved. This project is a fan-made
+        creation and is not affiliated with or endorsed by Nintendo, Creatures
+        Inc., or GAME FREAK.
+      </p>
+    </div>
+  </footer>
+</body>
+
 </html>
